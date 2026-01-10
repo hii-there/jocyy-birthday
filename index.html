@@ -52,23 +52,23 @@
             pointer-events: none; z-index: 1; overflow: hidden;
         }
 
-        /* 1. Kupu-kupu (Elegant Zig-Zag) */
+        /* 1. Kupu-kupu (Elegant Zig-Zag & Transparent) */
         .butterfly {
-            position: absolute; bottom: -50px; left: 20%;
+            position: absolute; bottom: -50px; left: 50%;
             font-size: 2.5rem; opacity: 0; z-index: 2;
-            animation: butterfly-fly 29s linear infinite;
+            animation: butterfly-fly 26s linear infinite; /* Sedikit diperlambat agar elegan */
         }
         @keyframes butterfly-fly {
-            0% { transform: translate(0, 0) rotate(0deg) scale(0.7); opacity: 0; }
-            10% { opacity: 0.5; }
-            25% { transform: translate(60px, -25vh) rotate(25deg) scale(0.7); }
-            50% { transform: translate(-60px, -50vh) rotate(-25deg) scale(0.7); }
-            75% { transform: translate(40px, -75vh) rotate(10deg) scale(7); }
-            90% { opacity: 0.45; }
-            100% { transform: translate(0, -110vh) rotate(0deg) scale(0.7); opacity: 0; }
+            0% { transform: translate(0, 0) rotate(0deg) scale(0.8); opacity: 0; }
+            10% { opacity: 0.6; } /* Transparan */
+            25% { transform: translate(60px, -25vh) rotate(25deg) scale(1); } 
+            50% { transform: translate(-60px, -50vh) rotate(-25deg) scale(0.9); }
+            75% { transform: translate(40px, -75vh) rotate(10deg) scale(1); }
+            90% { opacity: 0.6; } /* Transparan */
+            100% { transform: translate(0, -110vh) rotate(0deg) scale(0.8); opacity: 0; }
         }
 
-        /* 2. Middle Floaters (Max 4, Elegant Rise) */
+        /* 2. Middle Floaters (Max 4) */
         .bg-floater-mid {
             position: absolute; opacity: 0;
             animation: rise-mid-float 8s ease-in-out infinite;
@@ -79,13 +79,12 @@
             80% { opacity: 0.8; }
             100% { transform: translateY(-100px); opacity: 0; }
         }
-        /* Hanya 4 Posisi Spesifik */
         .bg-floater-mid:nth-child(1) { top: 20%; left: 15%; animation-delay: 0s; font-size: 2rem; }
         .bg-floater-mid:nth-child(2) { top: 30%; right: 15%; animation-delay: 2s; font-size: 1.8rem; }
         .bg-floater-mid:nth-child(3) { top: 60%; left: 10%; animation-delay: 4s; font-size: 1.5rem; }
         .bg-floater-mid:nth-child(4) { top: 70%; right: 10%; animation-delay: 1s; font-size: 2.2rem; }
 
-        /* 3. Bottom Floaters (Many, 1/8 Screen) */
+        /* 3. Bottom Floaters (ACAK POSISI AGAR TIDAK MENUMPUK DI KIRI) */
         .bg-floater-bottom {
             position: absolute; bottom: -30px; opacity: 0;
             animation: float-fade-bottom 6s linear infinite;
@@ -93,27 +92,30 @@
         @keyframes float-fade-bottom {
             0% { transform: translateY(0) scale(0.5); opacity: 0; }
             20% { opacity: 0.7; }
-            100% { transform: translateY(-10vh) scale(1.2) rotate(20deg); opacity: 0; } /* Max 10vh height (~1/5 screen) */
+            100% { transform: translateY(-15vh) scale(1.2) rotate(20deg); opacity: 0; } /* Naik sampai 15% layar */
         }
         
-        /* Generating random delays and positions for bottom floaters via CSS n-th child would be long, 
-           so I'll use a mix of defined classes below or just list them */
-        .bg-floater-bottom:nth-of-type(5) { left: 5%; animation-duration: 5s; animation-delay: 0s; font-size: 1.2rem; }
-        .bg-floater-bottom:nth-of-type(6) { left: 12%; animation-duration: 7s; animation-delay: 1s; font-size: 1.5rem; }
-        .bg-floater-bottom:nth-of-type(7) { left: 20%; animation-duration: 6s; animation-delay: 3s; font-size: 1rem; }
-        .bg-floater-bottom:nth-of-type(8) { left: 28%; animation-duration: 8s; animation-delay: 0.5s; font-size: 1.8rem; }
-        .bg-floater-bottom:nth-of-type(9) { left: 35%; animation-duration: 5.5s; animation-delay: 2s; font-size: 1.3rem; }
-        .bg-floater-bottom:nth-of-type(10) { left: 42%; animation-duration: 7.5s; animation-delay: 4s; font-size: 1.6rem; }
-        .bg-floater-bottom:nth-of-type(11) { left: 50%; animation-duration: 6.5s; animation-delay: 1.5s; font-size: 1.4rem; }
-        .bg-floater-bottom:nth-of-type(12) { left: 58%; animation-duration: 5s; animation-delay: 0.2s; font-size: 1.9rem; }
-        .bg-floater-bottom:nth-of-type(13) { left: 65%; animation-duration: 8s; animation-delay: 2.5s; font-size: 1.1rem; }
-        .bg-floater-bottom:nth-of-type(14) { left: 72%; animation-duration: 6s; animation-delay: 5s; font-size: 1.5rem; }
-        .bg-floater-bottom:nth-of-type(15) { left: 80%; animation-duration: 7s; animation-delay: 1s; font-size: 1.2rem; }
-        .bg-floater-bottom:nth-of-type(16) { left: 88%; animation-duration: 5.5s; animation-delay: 3.5s; font-size: 1.7rem; }
-        .bg-floater-bottom:nth-of-type(17) { left: 95%; animation-duration: 8.5s; animation-delay: 0.8s; font-size: 1.3rem; }
-        .bg-floater-bottom:nth-of-type(18) { left: 15%; animation-duration: 6.2s; animation-delay: 4.5s; font-size: 1.6rem; }
-        .bg-floater-bottom:nth-of-type(19) { left: 55%; animation-duration: 7.2s; animation-delay: 2.2s; font-size: 1.4rem; }
-        .bg-floater-bottom:nth-of-type(20) { left: 85%; animation-duration: 5.8s; animation-delay: 1.8s; font-size: 1.8rem; }
+        /* PERBAIKAN PENTING:
+           Urutan nth-child dimulai dari 5 karena ada 4 elemen .bg-floater-mid sebelumnya.
+           Posisi 'left' diacak (kiri, kanan, tengah, kiri, kanan...) agar berapapun jumlahnya tetap menyebar.
+        */
+        .bg-floater-bottom:nth-child(5) { left: 10%; animation-duration: 5s; animation-delay: 0s; font-size: 1.2rem; }
+        .bg-floater-bottom:nth-child(6) { left: 85%; animation-duration: 7s; animation-delay: 1s; font-size: 1.5rem; }
+        .bg-floater-bottom:nth-child(7) { left: 45%; animation-duration: 6s; animation-delay: 3s; font-size: 1rem; }
+        .bg-floater-bottom:nth-child(8) { left: 70%; animation-duration: 8s; animation-delay: 0.5s; font-size: 1.8rem; }
+        .bg-floater-bottom:nth-child(9) { left: 25%; animation-duration: 5.5s; animation-delay: 2s; font-size: 1.3rem; }
+        .bg-floater-bottom:nth-child(10) { left: 90%; animation-duration: 7.5s; animation-delay: 4s; font-size: 1.6rem; }
+        .bg-floater-bottom:nth-child(11) { left: 5%; animation-duration: 6.5s; animation-delay: 1.5s; font-size: 1.4rem; }
+        .bg-floater-bottom:nth-child(12) { left: 60%; animation-duration: 5s; animation-delay: 0.2s; font-size: 1.9rem; }
+        .bg-floater-bottom:nth-child(13) { left: 30%; animation-duration: 8s; animation-delay: 2.5s; font-size: 1.1rem; }
+        .bg-floater-bottom:nth-child(14) { left: 75%; animation-duration: 6s; animation-delay: 5s; font-size: 1.5rem; }
+        .bg-floater-bottom:nth-child(15) { left: 15%; animation-duration: 7s; animation-delay: 1s; font-size: 1.2rem; }
+        .bg-floater-bottom:nth-child(16) { left: 55%; animation-duration: 5.5s; animation-delay: 3.5s; font-size: 1.7rem; }
+        .bg-floater-bottom:nth-child(17) { left: 95%; animation-duration: 8.5s; animation-delay: 0.8s; font-size: 1.3rem; }
+        .bg-floater-bottom:nth-child(18) { left: 35%; animation-duration: 6.2s; animation-delay: 4.5s; font-size: 1.6rem; }
+        .bg-floater-bottom:nth-child(19) { left: 80%; animation-duration: 7.2s; animation-delay: 2.2s; font-size: 1.4rem; }
+        .bg-floater-bottom:nth-child(20) { left: 20%; animation-duration: 5.8s; animation-delay: 1.8s; font-size: 1.8rem; }
+        .bg-floater-bottom:nth-child(21) { left: 65%; animation-duration: 6s; animation-delay: 0.5s; font-size: 1.3rem; }
 
 
         /* UI Components */
@@ -397,16 +399,26 @@
 
     <!-- Background Elements Container -->
     <div class="bg-floater-container">
-        <!-- 3 Middle Floaters (Restricted) -->
+        <!-- 4 Middle Floaters (Restricted) -->
+        <div class="bg-floater-mid">✨</div>
         <div class="bg-floater-mid">💖</div>
         <div class="bg-floater-mid">🌸</div>
-        <div class="bg-floater-mid">🌼</div>
+        <div class="bg-floater-mid">💌</div>
 
-        <!-- 10+ Bottom Floaters (Fade out at 1/8 height) -->
+        <!-- Many Bottom Floaters (Distributed Randomly Left/Right/Center) -->
         <div class="bg-floater-bottom">❤️</div>
-        <div class="bg-floater-bottom">🌸</div>
-        <div class="bg-floater-bottom">🌷</div>
         <div class="bg-floater-bottom">✨</div>
+        <div class="bg-floater-bottom">🦋</div>
+        <div class="bg-floater-bottom">🌸</div>
+        <div class="bg-floater-bottom">🎀</div>
+        <div class="bg-floater-bottom">🌷</div>
+        <div class="bg-floater-bottom">💕</div>
+        <div class="bg-floater-bottom">💞</div>
+        <div class="bg-floater-bottom">💓</div>
+        <div class="bg-floater-bottom">💗</div>
+        <div class="bg-floater-bottom">💘</div>
+        <div class="bg-floater-bottom">💝</div>
+        <div class="bg-floater-bottom">💐</div>
         <div class="bg-floater-bottom">🌹</div>
         <div class="bg-floater-bottom">🌻</div>
         <div class="bg-floater-bottom">🌼</div>
@@ -810,4 +822,3 @@ Yours,
     </script>
 </body>
 </html>
-
