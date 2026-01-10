@@ -21,26 +21,18 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        /* FIXED LAYOUT TO PREVENT SCROLLING/DRAGGING */
         html, body {
-            width: 100%;
-            height: 100%;
-            overflow: hidden; /* Kunci Scroll */
-            position: fixed; /* Kunci Posisi */
-            touch-action: none; /* Matikan gesture zoom/pan */
-            overscroll-behavior: none; /* Matikan efek pantul iOS */
+            width: 100%; height: 100%; overflow: hidden; position: fixed;
+            touch-action: none; overscroll-behavior: none;
             font-family: 'Nunito', sans-serif;
-            background-color: #fff0f5;
-            background-image: var(--bg-pattern);
-            color: var(--text);
+            background-color: #fff0f5; background-image: var(--bg-pattern); color: var(--text);
         }
 
-        /* --- Custom Scrollbar for inner content --- */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(255, 154, 158, 0.5); border-radius: 10px; }
 
-        /* --- Global Animations --- */
+        /* --- Animations --- */
         @keyframes float-up { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
         @keyframes wiggle { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
         @keyframes pulse-beat { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
@@ -49,11 +41,41 @@
         @keyframes slide-up-smooth { 0% { transform: translateY(50px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
         @keyframes rotate-fade { 0% { transform: rotate(-10deg) scale(0.8); opacity: 0; } 100% { transform: rotate(0) scale(1); opacity: 1; } }
         @keyframes exit-fade { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(1.1); filter: blur(5px); } }
+        
+        /* New: Zoom In Up Animation (Elegant) */
+        @keyframes zoom-in-up {
+            0% { opacity: 0; transform: scale(0.8) translateY(50px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
 
-        /* --- UI Components --- */
+        /* New: Background Floaters */
+        @keyframes float-rotate {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes float-kiss {
+            0% { transform: translateY(0) scale(0.5); opacity: 0; }
+            20% { opacity: 1; transform: translateY(-20px) scale(1.2); }
+            100% { transform: translateY(-100vh) scale(1); opacity: 0; }
+        }
+        
+        @keyframes star-fall {
+            0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) translateX(20px) rotate(360deg); opacity: 0; }
+        }
+        
+        @keyframes rise-fade {
+            0% { transform: translateY(0) scale(0.5); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-150px) scale(1.2); opacity: 0; }
+        }
+
+        /* UI Components */
         .btn-main {
-            padding: 12px 30px;
-            background: linear-gradient(45deg, var(--primary), var(--deep-pink));
+            padding: 12px 30px; background: linear-gradient(45deg, var(--primary), var(--deep-pink));
             color: var(--white); border: none; border-radius: 50px;
             font-size: 1.1rem; font-weight: 700; font-family: 'Fredoka One', cursive;
             cursor: pointer; box-shadow: 0 5px 15px rgba(255, 107, 129, 0.3);
@@ -72,38 +94,54 @@
         .slide-container.active { opacity: 1; pointer-events: all; z-index: 10; }
         .slide-container.exit { animation: exit-fade 0.8s forwards; pointer-events: none; }
 
-        /* Entrance Logic */
+        /* --- Section Entrance Animations --- */
         #section-1.active > * { animation: pop-in 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
         #section-2.active > * { animation: slide-up-smooth 1s ease-out forwards; animation-delay: 0.2s; opacity: 0; }
         #section-3.active > * { animation: pop-in 1s ease-out forwards; animation-delay: 0.2s; opacity: 0; }
         #section-4.active > * { animation: zoom-in 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; animation-delay: 0.2s; opacity: 0; }
-        #section-5.active > * { animation: rotate-fade 1s ease-out forwards; animation-delay: 0.3s; opacity: 0; }
-        #section-6.active > * { animation: slide-up-smooth 1s ease-out forwards; animation-delay: 0.3s; opacity: 0; }
-        #section-7.active > * { animation: rotate-fade 1s ease-out forwards; animation-delay: 0.3s; opacity: 0; }
-        #section-8.active > * { animation: pop-in 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+        
+        /* Section 5 (Special Wish) - Revised Entrance */
+        #section-5.active h2, #section-5.active p { animation: slide-up-smooth 1s ease-out forwards; animation-delay: 0.2s; opacity: 0; }
+        #section-5.active .special-photo-container { animation: zoom-in-up 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; animation-delay: 0.4s; opacity: 0; }
+        #section-5.active .btn-main { animation: pop-in 1s ease-out forwards; animation-delay: 0.8s; opacity: 0; }
 
-        /* --- SECTION 1: COVER --- */
+        /* Section 6 (Gallery) - Increased Stagger Delay (More noticeable) */
+        #section-6.active h2, #section-6.active .gallery-hint { animation: slide-up-smooth 1s ease-out forwards; animation-delay: 0.2s; opacity: 0; }
+        #section-6.active .gallery-item { opacity: 0; animation: slide-up-smooth 0.8s ease-out forwards; }
+        #section-6.active .gallery-item:nth-child(1) { animation-delay: 0.2s; }
+        #section-6.active .gallery-item:nth-child(2) { animation-delay: 0.6s; } /* Increased delay */
+        #section-6.active .gallery-item:nth-child(3) { animation-delay: 1.0s; } /* Increased delay */
+        #section-6.active .gallery-item:nth-child(4) { animation-delay: 1.4s; } /* Increased delay */
+        #section-6.active .gallery-item:nth-child(5) { animation-delay: 1.8s; } /* Increased delay */
+        #section-6.active .gallery-item:nth-child(6) { animation-delay: 2.2s; } /* Increased delay */
+        #section-6.active .nav-btn { animation: pop-in 1s ease-out forwards; animation-delay: 2.5s; opacity: 0; }
+
+        /* Section 7 (Wishes) Staggered Entrance */
+        #section-7.active .wishes-container .flip-card { opacity: 0; animation: zoom-in-up 0.8s ease-out forwards; }
+        #section-7.active .wishes-container .flip-card:nth-child(1) { animation-delay: 0.2s; }
+        #section-7.active .wishes-container .flip-card:nth-child(2) { animation-delay: 0.6s; }
+        #section-7.active .wishes-container .flip-card:nth-child(3) { animation-delay: 1.0s; }
+        
+        #section-8.active > * { animation: slide-up-smooth 1s ease-out forwards; animation-delay: 0.2s; opacity: 0; }
+        #section-9.active > * { animation: pop-in 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+
+        /* --- STYLES FOR SECTIONS --- */
+        /* Cover */
         .cover-frame {
-            background: #fff; padding: 15px 15px 50px 15px;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1); transform: rotate(-3deg);
-            margin-bottom: 20px; width: 260px; animation: float-up 3s infinite ease-in-out;
+            background: #fff; padding: 15px 15px 50px 15px; box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            transform: rotate(-3deg); margin-bottom: 20px; width: 260px; animation: float-up 3s infinite ease-in-out;
             position: relative; border-radius: 5px;
         }
         .cover-frame img { width: 100%; height: auto; border-radius: 3px; display: block; aspect-ratio: 3/4; object-fit: cover; }
-        .cover-frame::after {
-            content: 'Birthday Girl ♥'; position: absolute; bottom: 15px; left: 0; width: 100%;
-            text-align: center; font-family: 'Pacifico', cursive; color: #555; font-size: 1.2rem;
-        }
+        .cover-frame::after { content: 'Birthday Girl ♥'; position: absolute; bottom: 15px; left: 0; width: 100%; text-align: center; font-family: 'Pacifico', cursive; color: #555; font-size: 1.2rem; }
         h1 { font-family: 'Fredoka One'; color: var(--deep-pink); font-size: 2.8rem; text-shadow: 2px 2px #fff; margin-bottom: 5px; text-align: center; }
         .sub-title { font-size: 1.1rem; color: var(--text); background: rgba(255,255,255,0.8); padding: 5px 15px; border-radius: 20px; margin-bottom: 30px; font-weight: 700; }
         .sticker { position: absolute; font-size: 2.5rem; z-index: 2; filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.1)); }
 
-        /* --- SECTION 2: ENVELOPE --- */
+        /* Envelope */
         .envelope-wrapper {
-            position: relative; width: 280px; height: 180px;
-            background: var(--primary); border-radius: 10px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-            display: flex; justify-content: center; align-items: flex-end;
+            position: relative; width: 280px; height: 180px; background: var(--primary); border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15); display: flex; justify-content: center; align-items: flex-end;
             cursor: pointer; transition: transform 0.3s;
         }
         .envelope-wrapper:hover { transform: scale(1.05); }
@@ -114,20 +152,18 @@
         }
         .envelope-wrapper.open .envelope-flap { transform: rotateX(180deg); z-index: 1; }
         .envelope-paper {
-            position: absolute; bottom: 10px; left: 10%; width: 80%; height: 80%;
-            background: #fff; border-radius: 5px; transition: transform 0.6s 0.2s;
-            display: flex; justify-content: center; align-items: center;
-            font-family: 'Pacifico'; color: var(--deep-pink); font-size: 1.5rem;
-            box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
+            position: absolute; bottom: 10px; left: 10%; width: 80%; height: 80%; background: #fff; border-radius: 5px;
+            transition: transform 0.6s 0.2s; display: flex; justify-content: center; align-items: center;
+            font-family: 'Pacifico'; color: var(--deep-pink); font-size: 1.5rem; box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
         }
         .envelope-wrapper.open .envelope-paper { transform: translateY(-100px); z-index: 4; }
 
-        /* --- SECTION 3: LETTER --- */
+        /* Letter */
         .letter-paper {
             background: #fffdf5; padding: 30px; width: 90%; max-width: 450px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1); position: relative;
-            background-image: radial-gradient(#ddd 1px, transparent 1px);
-            background-size: 20px 20px; border: 1px solid #fff; transform: rotate(1deg);
+            background-image: radial-gradient(#ddd 1px, transparent 1px); background-size: 20px 20px;
+            border: 1px solid #fff; transform: rotate(1deg);
         }
         .letter-paper::before {
             content: ''; position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
@@ -136,70 +172,61 @@
         .letter-content h2 { font-family: 'Pacifico'; color: var(--deep-pink); margin-bottom: 15px; font-size: 1.8rem; }
         .letter-content p { font-size: 1.05rem; line-height: 1.7; color: #555; }
 
-        /* --- SECTION 4: CAKE (ESTETIK & CUTE) --- */
-        .cake-wrapper {
-            position: relative; width: 280px; height: 280px;
-            display: flex; justify-content: center; align-items: flex-end; margin-bottom: 40px; cursor: pointer;
-        }
+        /* Cake */
+        .cake-wrapper { position: relative; width: 280px; height: 280px; display: flex; justify-content: center; align-items: flex-end; margin-bottom: 40px; cursor: pointer; }
         .cake-body { position: relative; width: 200px; height: 140px; display: flex; justify-content: center; z-index: 2; }
-        
         .cake-half { width: 50%; height: 100%; background: #FFC0CB; position: relative; transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s; }
         .cake-half.left { border-radius: 20px 0 0 20px; background: radial-gradient(circle at 20% 20%, #FFE4E1 10%, #FFC0CB 15%); }
         .cake-half.right { border-radius: 0 20px 20px 0; background: radial-gradient(circle at 80% 20%, #FFE4E1 10%, #FFC0CB 15%); }
-        
         .icing { position: absolute; top: -25px; width: 100%; height: 50px; background: #FFF5F5; border-radius: 50px; z-index: 2; box-shadow: 0 5px 10px rgba(0,0,0,0.05); }
         .cake-half.left .icing { border-radius: 30px 0 0 30px; left: -5px; width: 105%; }
         .cake-half.right .icing { border-radius: 0 30px 30px 0; right: -5px; width: 105%; }
-        
         .strawberry { width: 28px; height: 34px; background: #FF6B81; border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; position: absolute; top: -35px; z-index: 3; box-shadow: inset -2px -2px 5px rgba(0,0,0,0.2); }
         .cake-half.left .strawberry { left: 25px; transform: rotate(-15deg); }
         .cake-half.right .strawberry { right: 25px; transform: rotate(15deg); }
-        
         .candle {
-            position: absolute; bottom: 135px; left: 50%; transform: translateX(-50%);
-            width: 14px; height: 75px; 
+            position: absolute; bottom: 135px; left: 50%; transform: translateX(-50%); width: 14px; height: 75px; 
             background: repeating-linear-gradient(45deg, #FFF, #FFF 8px, #A18CD1 8px, #A18CD1 16px);
-            border-radius: 6px; z-index: 1; transition: opacity 0.5s;
-            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            border-radius: 6px; z-index: 1; transition: opacity 0.5s; box-shadow: 0 5px 10px rgba(0,0,0,0.1);
         }
         .flame {
-            position: absolute; top: -22px; left: 50%; transform: translateX(-50%);
-            width: 16px; height: 24px; background: radial-gradient(ellipse at bottom, #FFD700 0%, #FF8C00 100%);
+            position: absolute; top: -22px; left: 50%; transform: translateX(-50%); width: 16px; height: 24px;
+            background: radial-gradient(ellipse at bottom, #FFD700 0%, #FF8C00 100%);
             border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; animation: flicker 1s infinite alternate; box-shadow: 0 0 20px #FFD700;
         }
         @keyframes flicker { 0% { transform: translateX(-50%) scale(1) rotate(-2deg); opacity: 0.9; } 50% { transform: translateX(-50%) scale(1.1) rotate(2deg); opacity: 1; } 100% { transform: translateX(-50%) scale(0.9) rotate(-1deg); opacity: 0.8; } }
-
         .knife {
-            position: absolute; bottom: 170px; left: 50%; transform: translateX(-50%);
-            font-size: 4rem; z-index: 10; transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-            pointer-events: none; animation: float-up 2s infinite ease-in-out;
+            position: absolute; bottom: 170px; left: 50%; transform: translateX(-50%); font-size: 4rem; z-index: 10;
+            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1); pointer-events: none; animation: float-up 2s infinite ease-in-out;
             filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.2));
         }
-        
         .cake-wrapper.cut .cake-half.left { transform: translateX(-40px) rotate(-10deg); }
         .cake-wrapper.cut .cake-half.right { transform: translateX(40px) rotate(10deg); }
         .cake-wrapper.cut .candle { opacity: 0; transform: translateX(-50%) translateY(50px) scale(0); }
         .cake-wrapper.cut .knife { bottom: 60px; opacity: 0; transform: translateX(-50%) rotate(-90deg) scale(0.5); }
 
-        /* --- SECTION 5: SPECIAL WISH --- */
+        /* Special Wish */
         .special-photo-container {
             width: 300px; padding: 10px; background: #fff; border-radius: 15px;
             box-shadow: 0 15px 35px rgba(255, 154, 158, 0.4); transform: rotate(-1deg);
-            animation: pulse-beat 3s infinite ease-in-out; margin-bottom: 30px;
+            margin-bottom: 30px;
         }
         .special-photo-container img { width: 100%; height: auto; aspect-ratio: 4/3; object-fit: cover; border-radius: 10px; display: block; }
+        
+        /* New: Floating elements container for special wish */
+        .floating-elements {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; overflow: hidden;
+        }
+        .float-item { position: absolute; font-size: 2rem; opacity: 0; }
 
-        /* --- SECTION 6: GALLERY (SCRAPBOOK) --- */
+        /* Gallery */
         .gallery-container {
             width: 100%; height: 70vh; overflow-y: auto; padding: 10px 20px;
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 15px; align-content: start;
-            /* Allow scrolling within this container */
-            touch-action: pan-y; 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 15px; align-content: start; touch-action: pan-y;
         }
         .gallery-item {
-            background: #fff; padding: 8px; border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1); cursor: pointer;
-            transition: transform 0.3s; position: relative; height: 180px;
+            background: #fff; padding: 8px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            cursor: pointer; transition: transform 0.3s; position: relative; height: 180px;
         }
         .gallery-item:hover { transform: scale(1.05); z-index: 5; }
         .gallery-item:nth-child(odd) { transform: rotate(2deg); }
@@ -207,87 +234,138 @@
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; }
         .gallery-hint { margin-bottom: 10px; font-family: 'Caveat', cursive; font-size: 1.5rem; color: var(--deep-pink); animation: pulse-beat 1.5s infinite; text-align: center; }
 
-        /* --- SECTION 7: WISHES (FLIP CARDS) --- */
+        /* Wishes */
         .wishes-container {
             display: flex; flex-direction: column; gap: 20px; width: 100%; max-width: 350px;
-            height: 65vh; overflow-y: auto; padding: 10px;
-            touch-action: pan-y;
+            height: 65vh; overflow-y: auto; padding: 10px; touch-action: pan-y; padding-bottom: 50px;
         }
-        .flip-card { background-color: transparent; width: 100%; height: 120px; perspective: 1000px; cursor: pointer; }
+        .flip-card { background-color: transparent; width: 100%; height: 120px; perspective: 1000px; cursor: pointer; margin-bottom: 10px; }
         .flip-card-inner {
-            position: relative; width: 100%; height: 100%; text-align: center;
-            transition: transform 0.6s; transform-style: preserve-3d;
+            position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s; transform-style: preserve-3d;
             box-shadow: 0 5px 15px rgba(0,0,0,0.15); border-radius: 15px;
         }
         .flip-card.flipped .flip-card-inner { transform: rotateX(180deg); }
         .flip-card-front, .flip-card-back {
-            position: absolute; width: 100%; height: 100%;
-            -webkit-backface-visibility: hidden; backface-visibility: hidden;
-            border-radius: 15px; overflow: hidden;
+            position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 15px; overflow: hidden;
         }
         .flip-card-front { background: #fff; padding: 0; border: none; }
         .flip-card-front img { width: 100%; height: 100%; object-fit: cover; }
         .flip-card-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.4); display: flex; justify-content: center; align-items: center;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4);
+            display: flex; justify-content: center; align-items: center;
         }
-        .flip-card-title {
-            color: #fff; font-family: 'Fredoka One'; font-size: 1.4rem; letter-spacing: 1px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.6); display: flex; align-items: center; gap: 8px;
-        }
+        .flip-card-title { color: #fff; font-family: 'Fredoka One'; font-size: 1.4rem; letter-spacing: 1px; text-shadow: 2px 2px 4px rgba(0,0,0,0.6); display: flex; align-items: center; gap: 8px; }
         .flip-card-back {
             background: var(--primary); color: white; transform: rotateX(180deg);
-            font-family: 'Nunito'; font-size: 1rem; font-weight: 600;
-            display: flex; align-items: center; justify-content: center; padding: 15px;
+            font-family: 'Nunito'; font-size: 1rem; font-weight: 600; display: flex; align-items: center; justify-content: center; padding: 15px;
+        }
+        
+        /* Progress Bar */
+        .wishes-progress-container {
+            width: 100%; background-color: #eee; border-radius: 10px; height: 10px; margin-top: 20px; overflow: hidden;
+        }
+        .wishes-progress-bar {
+            height: 100%; width: 0%; background: linear-gradient(90deg, var(--deep-pink), var(--primary)); 
+            border-radius: 10px; transition: width 0.5s ease-in-out;
         }
 
-        /* --- SECTION 8: FINAL --- */
-        .big-number { font-size: 8rem; font-family: 'Fredoka One'; color: var(--deep-pink); line-height: 1; text-shadow: 3px 3px var(--secondary); }
-        .big-number span { font-size: 1.5rem; color: var(--text); display: block; margin-top: -10px; }
-
-        /* --- Polaroid Modal (Popup) --- */
-        .polaroid-modal {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.7); /* Background gelap fokus */
-            backdrop-filter: blur(3px);
-            display: flex; justify-content: center; align-items: center;
-            z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.5s;
+        /* --- LONG LETTER (OPTIMIZED & CUTE) --- */
+        .long-letter-container {
+            width: 90%; max-width: 500px; height: 75vh; overflow-y: auto;
+            background: #fff; padding: 40px; border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1); 
+            background-image: 
+                linear-gradient(rgba(200, 200, 200, 0.3) 1px, transparent 1px),
+                linear-gradient(90deg, transparent 95%, rgba(255, 182, 193, 0.3) 95%);
+            background-size: 100% 2em, 100% 100%;
+            background-color: #fefefe;
+            border: 1px solid #eee;
+            touch-action: pan-y; text-align: left;
+            position: relative;
         }
-        .polaroid-modal.active { opacity: 1; pointer-events: all; }
+        .long-letter-container::before {
+            content: ''; position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
+            width: 60px; height: 120px; 
+            border: 5px solid #aaa; border-radius: 30px; 
+            z-index: -1;
+        }
+        
+        .big-number-container { text-align: center; margin-bottom: 20px; border-bottom: 2px dashed var(--secondary); padding-bottom: 20px; }
+        .big-number { font-size: 5rem; font-family: 'Fredoka One'; color: var(--deep-pink); line-height: 1; text-shadow: 3px 3px var(--secondary); display: inline-block; }
+        .big-number span { font-size: 1.5rem; color: var(--text); display: block; margin-top: -5px; }
+        
+        .long-letter-text { 
+            font-family: 'Indie Flower', cursive; font-size: 1.3rem; line-height: 2em; color: #444; white-space: pre-wrap; padding-top: 10px;
+        }
+        .deco-sticker { position: absolute; font-size: 2rem; opacity: 0.8; pointer-events: none; }
+
+        /* Final */
+        .letter-photo-frame {
+            width: 220px; height: auto; margin: 0 auto 25px auto;
+            background: #fff; padding: 10px 10px 40px 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            transform: rotate(3deg); position: relative;
+        }
+        .letter-photo-frame img { width: 100%; border-radius: 5px; }
+        .letter-photo-frame::before {
+            content: ''; position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+            width: 80px; height: 25px; background: rgba(255, 182, 193, 0.8); opacity: 0.9;
+        }
+
+        /* Modals */
+        .modal-base {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8);
+            display: flex; justify-content: center; align-items: center; z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.5s;
+        }
+        .modal-base.active { opacity: 1; pointer-events: all; }
+        
+        /* Polaroid Modal */
         .polaroid-content {
             background: #fff; padding: 20px 20px 70px 20px; transform: rotate(-2deg);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3); text-align: center; position: relative;
-            max-width: 320px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3); text-align: center; position: relative; max-width: 320px;
         }
         .polaroid-content::before {
             content: ''; position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
-            width: 100px; height: 30px; background: rgba(255, 107, 129, 0.5); /* Washi Tape */
+            width: 100px; height: 30px; background: rgba(255, 107, 129, 0.5);
         }
         .polaroid-content img { width: 100%; height: auto; border: 1px solid #eee; filter: contrast(1.1) saturate(1.1); }
-        .polaroid-caption {
-            font-family: 'Indie Flower', cursive; font-size: 1.8rem; margin-top: 20px; 
-            color: #333; font-weight: bold; transform: rotate(-1deg);
-        }
-        
+        .polaroid-caption { font-family: 'Indie Flower', cursive; font-size: 1.8rem; margin-top: 20px; color: #333; font-weight: bold; transform: rotate(-1deg); }
+
         /* Gallery Modal */
-        .gallery-modal {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); display: flex; justify-content: center; align-items: center;
-            z-index: 300; opacity: 0; pointer-events: none; transition: opacity 0.3s; padding: 20px;
-        }
-        .gallery-modal.active { opacity: 1; pointer-events: all; }
-        .gallery-modal-content {
-            background: #fff; padding: 15px; border-radius: 15px; max-width: 90%; max-height: 80vh;
-            text-align: center; position: relative;
-        }
+        .gallery-modal-content { background: #fff; padding: 15px; border-radius: 15px; max-width: 90%; max-height: 80vh; text-align: center; position: relative; }
         .gallery-modal-content img { max-width: 100%; max-height: 60vh; border-radius: 10px; object-fit: contain; }
         .gallery-caption { margin-top: 15px; font-family: 'Nunito'; font-weight: 700; color: var(--text); font-size: 1.1rem; }
-        .close-gallery {
+        .close-btn {
             position: absolute; top: -15px; right: -15px; width: 35px; height: 35px;
             background: var(--deep-pink); color: #fff; border-radius: 50%;
             display: flex; justify-content: center; align-items: center; cursor: pointer;
             font-weight: bold; box-shadow: 0 5px 10px rgba(0,0,0,0.2);
         }
+
+        /* Final Wishes Modal */
+        .wishes-complete-content {
+            background: #fff; padding: 40px; border-radius: 20px; text-align: center; max-width: 80%;
+            box-shadow: 0 15px 30px rgba(255, 105, 180, 0.3); animation: pulse-beat 2s infinite;
+        }
+
+        /* Floating Kisses */
+        .kiss-particle { position: absolute; font-size: 3rem; pointer-events: none; animation: float-kiss 4s ease-in forwards; z-index: 999; }
+
+        /* New: Background Floaters */
+        .bg-floater-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 1; overflow: hidden;
+        }
+        .bg-floater {
+            position: absolute; font-size: 1.5rem; opacity: 0;
+            animation: float-rotate linear infinite; bottom: -50px;
+        }
+        .bg-floater:nth-child(1) { left: 10%; animation-duration: 15s; animation-delay: 0s; font-size: 2rem; }
+        .bg-floater:nth-child(2) { left: 30%; animation-duration: 20s; animation-delay: 2s; font-size: 1.5rem; }
+        .bg-floater:nth-child(3) { left: 50%; animation-duration: 18s; animation-delay: 5s; font-size: 2.2rem; }
+        .bg-floater:nth-child(4) { left: 70%; animation-duration: 22s; animation-delay: 1s; font-size: 1.8rem; }
+        .bg-floater:nth-child(5) { left: 90%; animation-duration: 16s; animation-delay: 8s; font-size: 2rem; }
+
 
         /* Misc */
         .cute-music-btn {
@@ -313,6 +391,15 @@
     </style>
 </head>
 <body>
+
+    <!-- New: Background Floaters for Cuteness -->
+    <div class="bg-floater-container">
+        <div class="bg-floater">✨</div>
+        <div class="bg-floater">⭐</div>
+        <div class="bg-floater">💖</div>
+        <div class="bg-floater">✨</div>
+        <div class="bg-floater">🌟</div>
+    </div>
 
     <!-- AUDIO -->
     <audio id="bg-music" loop>
@@ -366,7 +453,7 @@
         </button>
     </section>
 
-    <!-- SECTION 4: CAKE (REFINED & CUTE) -->
+    <!-- SECTION 4: CAKE -->
     <section class="slide-container" id="section-4">
         <h2 style="font-family: 'Fredoka One'; color: var(--deep-pink); margin-bottom: 40px;">Make a Wish! 🎂</h2>
         <div class="cake-wrapper" id="cake-box" onclick="cutCake()">
@@ -378,43 +465,44 @@
             </div>
         </div>
         <p class="cut-instruction" id="cut-text">Tap to Cut the Cake!</p>
-        <!-- Tombol lanjut ke Special Wish (Section 5) -->
         <button class="btn-main hidden" id="after-cut-btn" onclick="delayedNext(5)">
             Yummy! Next <i data-lucide="arrow-right"></i>
         </button>
     </section>
 
-    <!-- SECTION 5: SPECIAL WISH (MOVED HERE) -->
+    <!-- SECTION 5: SPECIAL WISH -->
     <section class="slide-container" id="section-5">
         <h2 style="margin-bottom: 20px; color: var(--deep-pink); font-family: 'Fredoka One';">One Special Wish... 💖</h2>
         <p style="margin-bottom: 30px; font-size: 1.1rem; color: #666; text-align: center;">Tutup matamu sejenak, dan ucapkan harapan terbesarmu...</p>
         <div class="special-photo-container">
             <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1000&auto=format&fit=crop" alt="Your Wish">
         </div>
-        <!-- Trigger Modal without leaving section -->
+        
+        <!-- Additional Cute Effects for this slide only -->
+        <div class="floating-elements">
+            <div class="falling-star" style="left:20%; animation-delay:0s;">🌟</div>
+            <div class="falling-star" style="left:80%; animation-delay:1.5s;">🌟</div>
+            <div class="rising-heart" style="left:50%; animation-delay:0.5s;">❤️</div>
+        </div>
+
         <button class="btn-main" style="margin-top: 30px;" onclick="showPolaroidSurprise()">
             <i data-lucide="heart"></i> I've made my wish
         </button>
     </section>
 
-    <!-- SECTION 6: GALLERY (SCRAPBOOK) -->
+    <!-- SECTION 6: GALLERY -->
     <section class="slide-container" id="section-6">
         <h2 style="font-family: 'Fredoka One'; color: var(--deep-pink); margin-bottom: 10px;">Our Cute Moments 📸</h2>
         <div class="gallery-hint">Tap photo to see detail! 👇</div>
         
         <div class="gallery-container">
-            <div class="gallery-item" onclick="showGalleryModal('https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?q=80&w=687&auto=format&fit=crop', 'Ingat gak pas kita jalan-jalan kesini? Seru banget ya!')">
-                <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?q=80&w=687&auto=format&fit=crop">
-            </div>
-            <div class="gallery-item" onclick="showGalleryModal('https://images.unsplash.com/photo-1621112904887-419379ce6824?q=80&w=1744&auto=format&fit=crop', 'Senyum kamu manis banget disini sayang 🥰')">
-                <img src="https://images.unsplash.com/photo-1621112904887-419379ce6824?q=80&w=1744&auto=format&fit=crop">
-            </div>
-            <div class="gallery-item" onclick="showGalleryModal('https://images.unsplash.com/photo-1523438097201-512ae7d59c44?q=80&w=687&auto=format&fit=crop', 'Salah satu momen favorit aku sama kamu ❤️')">
-                <img src="https://images.unsplash.com/photo-1523438097201-512ae7d59c44?q=80&w=687&auto=format&fit=crop">
-            </div>
-            <div class="gallery-item" onclick="showGalleryModal('https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?q=80&w=1738&auto=format&fit=crop', 'Semoga kita bisa kayak gini terus yaa!')">
-                <img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?q=80&w=1738&auto=format&fit=crop">
-            </div>
+            <!-- 6 Photos with staggered entrance -->
+            <div class="gallery-item" onclick="showGalleryModal('https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?q=80&w=687&auto=format&fit=crop', 'Sweet memory 1')"><img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?q=80&w=687&auto=format&fit=crop"></div>
+            <div class="gallery-item" onclick="showGalleryModal('https://images.unsplash.com/photo-1621112904887-419379ce6824?q=80&w=1744&auto=format&fit=crop', 'Sweet memory 2')"><img src="https://images.unsplash.com/photo-1621112904887-419379ce6824?q=80&w=1744&auto=format&fit=crop"></div>
+            <div class="gallery-item" onclick="showGalleryModal('https://images.unsplash.com/photo-1523438097201-512ae7d59c44?q=80&w=687&auto=format&fit=crop', 'Sweet memory 3')"><img src="https://images.unsplash.com/photo-1523438097201-512ae7d59c44?q=80&w=687&auto=format&fit=crop"></div>
+            <div class="gallery-item" onclick="showGalleryModal('https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?q=80&w=1738&auto=format&fit=crop', 'Sweet memory 4')"><img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?q=80&w=1738&auto=format&fit=crop"></div>
+            <div class="gallery-item" onclick="showGalleryModal('https://images.unsplash.com/photo-1542596594-649edbc13630?q=80&w=800&auto=format&fit=crop', 'Sweet memory 5')"><img src="https://images.unsplash.com/photo-1542596594-649edbc13630?q=80&w=800&auto=format&fit=crop"></div>
+            <div class="gallery-item" onclick="showGalleryModal('https://images.unsplash.com/photo-1517263904808-5dc8b43b1c3f?q=80&w=800&auto=format&fit=crop', 'Sweet memory 6')"><img src="https://images.unsplash.com/photo-1517263904808-5dc8b43b1c3f?q=80&w=800&auto=format&fit=crop"></div>
         </div>
 
         <button class="nav-btn" onclick="delayedNext(7)">
@@ -425,69 +513,101 @@
     <!-- SECTION 7: WISHES (FLIP CARDS) -->
     <section class="slide-container" id="section-7">
         <h2 style="font-family: 'Fredoka One'; color: var(--deep-pink); margin-bottom: 20px;">My Wishes for You ✨</h2>
-        <p style="margin-bottom: 20px; font-size: 0.9rem;">Tap photos to reveal!</p>
+        <p style="margin-bottom: 20px; font-size: 0.9rem;">Tap all cards to reveal!</p>
         
         <div class="wishes-container">
-            <!-- Card 1: Health -->
             <div class="flip-card" onclick="flipCard(this)">
                 <div class="flip-card-inner">
-                    <div class="flip-card-front">
-                        <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=800&auto=format&fit=crop" alt="Health">
-                        <div class="flip-card-overlay"><div class="flip-card-title"><i data-lucide="heart"></i> Health</div></div>
-                    </div>
+                    <div class="flip-card-front"><img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=800&auto=format&fit=crop"><div class="flip-card-overlay"><div class="flip-card-title"><i data-lucide="heart"></i> Health</div></div></div>
                     <div class="flip-card-back">Semoga kamu sehat selalu, panjang umur, dan dijauhkan dari segala penyakit. Aamiin! 💪</div>
                 </div>
             </div>
-            <!-- Card 2: Career -->
             <div class="flip-card" onclick="flipCard(this)">
                 <div class="flip-card-inner">
-                    <div class="flip-card-front">
-                        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=800&auto=format&fit=crop" alt="Career">
-                        <div class="flip-card-overlay"><div class="flip-card-title"><i data-lucide="briefcase"></i> Career</div></div>
-                    </div>
+                    <div class="flip-card-front"><img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=800&auto=format&fit=crop"><div class="flip-card-overlay"><div class="flip-card-title"><i data-lucide="briefcase"></i> Career</div></div></div>
                     <div class="flip-card-back">Semoga karirmu makin cemerlang, rezeki lancar, dan semua target tercapai tahun ini! 🚀</div>
                 </div>
             </div>
-            <!-- Card 3: Us (Love) -->
             <div class="flip-card" onclick="flipCard(this)">
                 <div class="flip-card-inner">
-                    <div class="flip-card-front">
-                        <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=800&auto=format&fit=crop" alt="Us">
-                        <div class="flip-card-overlay"><div class="flip-card-title"><i data-lucide="smile"></i> Us</div></div>
-                    </div>
+                    <div class="flip-card-front"><img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=800&auto=format&fit=crop"><div class="flip-card-overlay"><div class="flip-card-title"><i data-lucide="smile"></i> Us</div></div></div>
                     <div class="flip-card-back">Semoga kita makin langgeng, saling mengerti, dan bahagia selamanya. Love you! ❤️</div>
                 </div>
             </div>
         </div>
-
-        <button class="btn-main hidden" id="wishes-next-btn" style="margin-top: 20px;" onclick="delayedNext(8)">
-            One Last Wish... <i data-lucide="star"></i>
-        </button>
+        
+        <div class="wishes-progress-container">
+            <div class="wishes-progress-bar" id="wishesProgressBar"></div>
+        </div>
+        <div style="text-align:center; margin-top:5px; font-size:0.8rem; color:#888;">Progress: <span id="wishesCount">0</span>/3</div>
     </section>
 
-    <!-- SECTION 8: FINAL -->
+    <!-- SECTION 8: LONG LETTER (SWAPPED: 26 YEARS LOVED HERE) -->
     <section class="slide-container" id="section-8">
-        <div class="big-number">26<span>Years Loved!</span></div>
-        <h2 style="margin-top: 30px; color: var(--deep-pink);">I Love You, Dear. 💖</h2>
-        <p style="margin-top: 15px; font-size: 1.2rem; font-weight: 600;">Happy Birthday!</p>
-        <div style="margin-top: 50px;">
-            <button class="btn-main" onclick="location.reload()"><i data-lucide="rotate-ccw"></i> Replay Surprise</button>
+        <div class="long-letter-container">
+            <!-- Stiker Hiasan -->
+            <div class="deco-sticker" style="top: 10px; right: 10px;">🌟</div>
+            <div class="deco-sticker" style="bottom: 10px; left: 10px;">💖</div>
+            
+            <div class="big-number-container">
+                <div class="big-number">26<span>Years Loved!</span></div>
+            </div>
+
+            <div class="long-letter-text">
+Dear Sayangku,
+
+Selamat ulang tahun yang ke-26! 🎉
+Di usia yang baru ini, aku cuma mau bilang betapa bersyukurnya aku punya kamu. Kamu adalah alasan di balik banyak senyumku setiap hari.
+
+Terima kasih sudah jadi orang yang kuat, sabar, dan penuh kasih sayang. Aku tau hidup ga selalu mudah, tapi aku janji bakal selalu ada di samping kamu, dukung kamu, dan genggam tangan kamu di setiap langkah.
+
+Semoga semua mimpi-mimpi kamu yang belum terwujud, bisa segera jadi kenyataan tahun ini. Tetap jadi diri kamu yang luar biasa ya.
+
+I love you more than words can say. Happy Birthday, my favorite person! ❤️
+
+Yours,
+[Nama Kamu]
+            </div>
+            <button class="btn-main" style="margin-top: 30px; width: 100%; justify-content: center;" onclick="delayedNext(9)">
+                Seal the Letter <i data-lucide="mail"></i>
+            </button>
         </div>
     </section>
 
-    <!-- GALLERY MODAL -->
-    <div class="gallery-modal" id="galleryModal">
+    <!-- SECTION 9: FINAL (SWAPPED: PHOTO HERE) -->
+    <section class="slide-container" id="section-9">
+        <div class="letter-photo-frame">
+            <!-- Ganti URL foto ini dengan foto doi -->
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=800&auto=format&fit=crop" alt="My Love">
+        </div>
+        <h2 style="margin-top: 30px; color: var(--deep-pink);">Happy Birthday!</h2>
+        <p style="margin-top: 15px; font-size: 1.2rem; font-weight: 600;">Sending you tons of love & kisses!</p>
+        <div style="margin-top: 40px;">
+            <button class="btn-main" onclick="sendKisses()">
+                Send Birthday Kisses 💋
+            </button>
+        </div>
+        <div style="margin-top: 20px;">
+            <button class="btn-main" style="background: var(--text); font-size: 0.9rem;" onclick="location.reload()">
+                <i data-lucide="rotate-ccw"></i> Replay Surprise
+            </button>
+        </div>
+    </section>
+
+    <!-- MODALS -->
+    
+    <!-- Gallery Modal -->
+    <div class="modal-base gallery-modal" id="galleryModal">
         <div class="gallery-modal-content">
-            <div class="close-gallery" onclick="closeGalleryModal()">X</div>
+            <div class="close-btn" onclick="closeGalleryModal()">X</div>
             <img id="modalImg" src="" alt="">
             <div class="gallery-caption" id="modalCaption"></div>
         </div>
     </div>
 
-    <!-- POLAROID MODAL (POPUP ON TOP OF SPECIAL WISH) -->
-    <div class="polaroid-modal" id="polaroidModal">
+    <!-- Polaroid Modal (Popup) -->
+    <div class="modal-base polaroid-modal" id="polaroidModal">
         <div class="polaroid-content">
-            <!-- Foto Polaroid Doi -->
             <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?q=80&w=1000&auto=format&fit=crop" alt="">
             <div class="polaroid-caption">May it come true! ✨</div>
             <button class="btn-main" style="margin-top: 20px;" onclick="closePolaroidAndNext()">Amiin & Continue <i data-lucide="arrow-right"></i></button>
@@ -495,6 +615,17 @@
         <div class="deco-emoji" style="top: 15%; left: 10%;">🧸</div>
         <div class="deco-emoji" style="bottom: 15%; right: 10%;">🎀</div>
         <div class="deco-emoji" style="top: 50%; right: 5%; animation-delay: 1s;">💖</div>
+    </div>
+
+    <!-- Final Letter Prompt Modal -->
+    <div class="modal-base" id="finalLetterModal">
+        <div class="wishes-complete-content">
+            <h2 style="color: var(--deep-pink); font-family: 'Fredoka One';">All Wishes Unlocked! 🔓</h2>
+            <p style="margin: 15px 0; font-size: 1.1rem;">There is one last letter waiting for you...</p>
+            <button class="btn-main" onclick="openFinalLetterSlide()">
+                Open Final Letter <i data-lucide="mail-open"></i>
+            </button>
+        </div>
     </div>
 
     <script>
@@ -568,13 +699,25 @@
             if(!card.classList.contains('flipped')) {
                 card.classList.add('flipped');
                 flippedCount++;
+                
+                // Update Progress
+                document.getElementById('wishesCount').innerText = flippedCount;
+                document.getElementById('wishesProgressBar').style.width = (flippedCount / 3 * 100) + '%';
+
                 if(flippedCount === 3) {
+                    // Delay before showing next step
                     setTimeout(() => {
-                        document.getElementById('wishes-next-btn').classList.remove('hidden');
+                        document.getElementById('finalLetterModal').classList.add('active');
                         fireConfetti();
-                    }, 500);
+                    }, 3000); // 3 Seconds Delay
                 }
             }
+        }
+
+        // Open Final Letter Slide
+        function openFinalLetterSlide() {
+            document.getElementById('finalLetterModal').classList.remove('active');
+            delayedNext(8);
         }
 
         // Polaroid Popup Logic
@@ -587,6 +730,28 @@
             delayedNext(6); // Continue to Gallery
         }
 
+        // Kisses Effect
+        function sendKisses() {
+            for (let i = 0; i < 20; i++) {
+                createKiss();
+            }
+        }
+
+        function createKiss() {
+            const kiss = document.createElement('div');
+            kiss.innerHTML = '💋';
+            kiss.classList.add('kiss-particle');
+            kiss.style.left = Math.random() * 100 + 'vw';
+            kiss.style.top = (100 + Math.random() * 20) + 'vh';
+            kiss.style.animationDuration = (3 + Math.random() * 2) + 's';
+            kiss.style.fontSize = (2 + Math.random() * 2) + 'rem';
+            document.body.appendChild(kiss);
+
+            setTimeout(() => {
+                kiss.remove();
+            }, 5000);
+        }
+
         // Optimized Confetti
         const canvas = document.getElementById('confetti-canvas');
         const ctx = canvas.getContext('2d');
@@ -597,7 +762,6 @@
         const colors = ['#ff9a9e', '#fbc2eb', '#fad0c4', '#a18cd1', '#84fab0'];
 
         function fireConfetti() {
-            // Reduce particles to prevent lag
             for(let i=0; i<30; i++) {
                 particles.push({
                     x: window.innerWidth / 2, 
@@ -606,7 +770,7 @@
                     vy: (Math.random() - 0.5) * 10,
                     size: Math.random() * 5 + 2, 
                     color: colors[Math.floor(Math.random() * colors.length)],
-                    life: 80, // Shorter life
+                    life: 80,
                     alpha: 1
                 });
             }
@@ -616,18 +780,17 @@
         let animating = false;
         function animate() {
             animating = true;
-            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear previous frame
+            ctx.clearRect(0, 0, canvas.width, canvas.height); 
             
-            // Filter dead particles first
             particles = particles.filter(p => p.life > 0 && p.alpha > 0);
 
             for(let i=0; i<particles.length; i++) {
                 let p = particles[i];
                 p.x += p.vx; 
                 p.y += p.vy; 
-                p.vy += 0.15; // Gravity
+                p.vy += 0.15; 
                 p.life--;
-                p.alpha -= 0.015; // Faster fade out
+                p.alpha -= 0.015; 
                 
                 ctx.globalAlpha = Math.max(0, p.alpha);
                 ctx.fillStyle = p.color; 
@@ -635,13 +798,13 @@
                 ctx.arc(p.x, p.y, p.size, 0, Math.PI*2); 
                 ctx.fill();
             }
-            ctx.globalAlpha = 1; // Reset alpha
+            ctx.globalAlpha = 1;
 
             if(particles.length > 0) {
                 requestAnimationFrame(animate);
             } else {
                 animating = false;
-                ctx.clearRect(0, 0, canvas.width, canvas.height); // Final clear
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
             }
         }
         
