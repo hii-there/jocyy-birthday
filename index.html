@@ -433,6 +433,60 @@
             box-shadow: 0 20px 60px rgba(0,0,0,0.2);
         }
         .modal.active .modal-content { transform: scale(1) rotate(0deg); }
+        
+        /* --- POLAROID MODAL (NEW) --- */
+        .polaroid-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 154, 158, 0.85); /* Slightly opaque cute pink */
+            backdrop-filter: blur(8px);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 200; opacity: 0; pointer-events: none;
+            transition: opacity 0.5s;
+        }
+        .polaroid-modal.active { opacity: 1; pointer-events: all; }
+
+        .polaroid-container {
+            position: relative;
+            transform: scale(0.8);
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .polaroid-modal.active .polaroid-container { transform: scale(1); }
+
+        .polaroid-frame {
+            background: #fff;
+            padding: 15px 15px 60px 15px; /* Bottom padding larger for classic polaroid look */
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            transform: rotate(-3deg);
+            transition: transform 0.3s;
+            width: 320px;
+            text-align: center;
+        }
+        .polaroid-frame:hover { transform: rotate(0deg) scale(1.02); }
+
+        .polaroid-frame img {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 4/3; /* Landscape Ratio */
+            object-fit: cover;
+            border: 1px solid #eee;
+        }
+
+        .polaroid-caption {
+            font-family: 'Fredoka One', cursive;
+            color: var(--primary);
+            font-size: 1.4rem;
+            margin-top: 25px;
+            transform: rotate(-2deg);
+        }
+
+        .deco-emoji {
+            position: absolute;
+            font-size: 3.5rem;
+            animation: float-up 3s infinite ease-in-out;
+            z-index: 201;
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1));
+        }
 
         /* --- Final Section --- */
         .big-number {
@@ -667,7 +721,8 @@
                 </div>
             </div>
 
-            <button class="nav-btn" onclick="fireConfetti(); nextSlide(6)">
+            <!-- GANTI FUNGSI BUTTON UNTUK BUKA POLAROID SURPRISE -->
+            <button class="nav-btn" onclick="showPolaroidSurprise()">
                 <i data-lucide="check" size="32"></i>
             </button>
         </div>
@@ -691,12 +746,33 @@
         </div>
     </section>
 
-    <!-- MODAL -->
+    <!-- MODAL WISH DETAILS -->
     <div class="modal" id="wishModal" onclick="closeModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
             <h3 id="modalTitle" style="margin-bottom: 15px; color: var(--primary);">Title</h3>
             <p id="modalText" style="line-height: 1.6; color: var(--text); font-size: 1.1rem;">Text</p>
             <button class="btn-main" style="margin-top: 25px; padding: 10px 25px; font-size: 1rem;" onclick="closeModal()">Amiiin! 🙏</button>
+        </div>
+    </div>
+
+    <!-- NEW POLAROID SURPRISE POPUP -->
+    <div class="polaroid-modal" id="polaroidModal">
+        <div class="polaroid-container">
+            <div class="polaroid-frame">
+                <!-- GANTI URL INI DENGAN FOTO LANDSCAPE PACAR KAMU NANTI -->
+                <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?q=80&w=1000&auto=format&fit=crop" alt="Special Photo">
+                <div class="polaroid-caption">May your wishes come true! ✨</div>
+            </div>
+            
+            <!-- Cute Floating Emojis -->
+            <div class="deco-emoji" style="top: -30px; left: -20px; animation-delay: 0s;">🧸</div>
+            <div class="deco-emoji" style="bottom: -20px; right: -20px; animation-delay: 1s;">🎀</div>
+            <div class="deco-emoji" style="top: 40%; right: -45px; animation-delay: 0.5s;">💖</div>
+            <div class="deco-emoji" style="top: 40%; left: -45px; animation-delay: 1.5s;">🌸</div>
+            
+            <button class="btn-main" style="margin-top: 35px; box-shadow: 0 10px 20px rgba(0,0,0,0.2);" onclick="closePolaroidAndNext()">
+                Amiin & Continue <i data-lucide="arrow-right"></i>
+            </button>
         </div>
     </div>
 
@@ -774,6 +850,17 @@
 
         function closeModal() {
             document.getElementById('wishModal').classList.remove('active');
+        }
+
+        // --- NEW POLAROID LOGIC ---
+        function showPolaroidSurprise() {
+            fireConfetti(); // Fire confetti first
+            document.getElementById('polaroidModal').classList.add('active');
+        }
+
+        function closePolaroidAndNext() {
+            document.getElementById('polaroidModal').classList.remove('active');
+            nextSlide(6); // Go to Final Section
         }
 
         const canvas = document.getElementById('confetti-canvas');
