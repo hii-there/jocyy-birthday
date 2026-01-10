@@ -138,6 +138,145 @@
             box-shadow: 0 10px 20px rgba(255, 154, 158, 0.6);
             animation: wiggle 0.5s ease-in-out infinite;
         }
+        
+        /* --- CAKE STYLES (NEW) --- */
+        .cake-wrapper {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            margin-bottom: 50px;
+            cursor: pointer;
+        }
+
+        .cake-body {
+            position: relative;
+            width: 200px;
+            height: 150px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .cake-half {
+            width: 50%;
+            height: 100%;
+            background: #ff9a9e;
+            position: relative;
+            transition: transform 1s ease-in-out, opacity 0.5s;
+        }
+
+        .cake-half.left {
+            border-radius: 20px 0 0 20px;
+            background: radial-gradient(circle at 20% 20%, #ffccd5 10%, #ff9a9e 15%);
+        }
+        .cake-half.right {
+            border-radius: 0 20px 20px 0;
+            background: radial-gradient(circle at 80% 20%, #ffccd5 10%, #ff9a9e 15%);
+        }
+
+        /* Icing details */
+        .icing {
+            position: absolute;
+            top: -20px;
+            width: 100%;
+            height: 40px;
+            background: #fff;
+            border-radius: 50%;
+            z-index: 2;
+        }
+        .cake-half.left .icing { border-radius: 30px 0 0 30px; left: -5px; width: 105%; }
+        .cake-half.right .icing { border-radius: 0 30px 30px 0; right: -5px; width: 105%; }
+
+        /* Strawberry */
+        .strawberry {
+            width: 30px; height: 35px;
+            background: #e74c3c;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            position: absolute;
+            top: -35px;
+            z-index: 3;
+        }
+        .cake-half.left .strawberry { left: 20px; transform: rotate(-10deg); }
+        .cake-half.right .strawberry { right: 20px; transform: rotate(10deg); }
+
+        .candle {
+            position: absolute;
+            top: -90px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 15px;
+            height: 80px;
+            background: repeating-linear-gradient(45deg, #fff, #fff 5px, #fbc2eb 5px, #fbc2eb 10px);
+            border-radius: 5px;
+            z-index: 1;
+            transition: opacity 0.5s;
+        }
+
+        .flame {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 15px;
+            height: 25px;
+            background: radial-gradient(ellipse at bottom, #ffee00 0%, #ff9900 100%);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            animation: flicker 1s infinite alternate;
+            box-shadow: 0 0 20px #ff9900;
+        }
+
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scale(1) rotate(-2deg); opacity: 0.9; }
+            50% { transform: translateX(-50%) scale(1.1) rotate(2deg); opacity: 1; }
+            100% { transform: translateX(-50%) scale(0.9) rotate(-1deg); opacity: 0.8; }
+        }
+
+        /* Knife */
+        .knife {
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-45deg);
+            font-size: 4rem;
+            z-index: 10;
+            transition: all 0.5s;
+            pointer-events: none; /* Let clicks pass to cake wrapper */
+            animation: float-knife 2s infinite ease-in-out;
+        }
+
+        @keyframes float-knife {
+            0%, 100% { top: -60px; }
+            50% { top: -80px; }
+        }
+
+        /* CUT Animation Classes */
+        .cake-wrapper.cut .cake-half.left {
+            transform: translateX(-40px) rotate(-10deg);
+        }
+        .cake-wrapper.cut .cake-half.right {
+            transform: translateX(40px) rotate(10deg);
+        }
+        .cake-wrapper.cut .candle {
+            opacity: 0;
+            transform: translateX(-50%) translateY(50px);
+        }
+        .cake-wrapper.cut .knife {
+            top: 20px;
+            opacity: 0;
+            transform: translateX(-50%) rotate(-90deg) scale(0.5);
+        }
+        
+        .cut-instruction {
+            margin-top: 20px;
+            font-family: 'Fredoka One';
+            color: var(--primary);
+            animation: pulse-shadow 2s infinite;
+            padding: 10px 20px;
+            background: #fff;
+            border-radius: 20px;
+        }
 
         /* --- Section 2: Intro Note --- */
         .note-card {
@@ -338,6 +477,7 @@
             animation: pulse-shadow 2s infinite;
         }
         .nav-btn:hover { transform: scale(1.15) rotate(10deg); }
+        .hidden { display: none !important; }
 
         .music-control-container {
             position: fixed; top: 20px; right: 20px; z-index: 60;
@@ -375,6 +515,7 @@
             .gallery-wrapper { padding: 0 20px; }
             .photo-card { width: 250px; height: 360px; }
             .big-number { font-size: 8rem; }
+            .cake-wrapper { width: 260px; height: 260px; }
         }
     </style>
 </head>
@@ -386,7 +527,7 @@
     <div class="floating-element" style="bottom: 15%; left: 20%; font-size: 2rem; --duration: 4.5s; --delay: 0.5s;">✨</div>
     <div class="floating-element" style="bottom: 25%; right: 10%; font-size: 1.8rem; --duration: 5.5s; --delay: 1.5s;">🎂</div>
 
-    <!-- Audio Element dengan Link Baru -->
+    <!-- Audio Element -->
     <audio id="bg-music" loop>
         <source src="https://github.com/undangandigitalku/laguundangan/raw/refs/heads/main/English%20-%20A%20Thousand%20Years%20Real.mp3" type="audio/mpeg">
     </audio>
@@ -417,8 +558,40 @@
         </div>
     </section>
 
-    <!-- SECTION 2: INTRO LETTER -->
+    <!-- SECTION 2: CUT THE CAKE (NEW FEATURE) -->
     <section class="slide-container" id="section-2">
+        <div style="text-align: center; display: flex; flex-direction: column; align-items: center;">
+            <h2 style="margin-bottom: 40px;">Let's Cut The Cake! 🎂</h2>
+            
+            <div class="cake-wrapper" id="cake-wrapper" onclick="cutTheCake()">
+                <div class="knife">🔪</div>
+                
+                <div class="candle">
+                    <div class="flame"></div>
+                </div>
+                
+                <div class="cake-body">
+                    <div class="cake-half left">
+                        <div class="icing"></div>
+                        <div class="strawberry"></div>
+                    </div>
+                    <div class="cake-half right">
+                        <div class="icing"></div>
+                        <div class="strawberry"></div>
+                    </div>
+                </div>
+            </div>
+
+            <p class="cut-instruction" id="cut-text">Tap the Cake to Cut!</p>
+
+            <button class="btn-main hidden" id="after-cut-btn" onclick="nextSlide(3)">
+                Yeay! Eat the Cake <i data-lucide="arrow-right"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- SECTION 3: INTRO LETTER -->
+    <section class="slide-container" id="section-3">
         <div class="note-card">
             <h2>Dear, My Love</h2>
             <div class="note-text">
@@ -427,14 +600,14 @@
                 Aku cuma mau bilang, aku banggaaa banget sama semua pencapaian kamu, sekecil apapun itu.
                 Terima kasih sudah bertahan, tumbuh, dan menjadi versi terbaik dari dirimu. You are amazing! 💖
             </div>
-            <button class="btn-main" style="padding: 12px 30px; font-size: 1rem;" onclick="nextSlide(3)">
+            <button class="btn-main" style="padding: 12px 30px; font-size: 1rem;" onclick="nextSlide(4)">
                 Next Journey <i data-lucide="arrow-right" style="animation: float-up 1s infinite;"></i>
             </button>
         </div>
     </section>
 
-    <!-- SECTION 3: GALLERY -->
-    <section class="slide-container" id="section-3">
+    <!-- SECTION 4: GALLERY -->
+    <section class="slide-container" id="section-4">
         <div style="width: 100%; display: flex; flex-direction: column; align-items: center;">
             <h2>Our Cute Moments</h2>
             
@@ -462,14 +635,14 @@
                 <i data-lucide="hand-pointing-right" style="vertical-align: middle;"></i> Geser ke samping ya!
             </div>
             
-            <button class="nav-btn" onclick="nextSlide(4)">
+            <button class="nav-btn" onclick="nextSlide(5)">
                 <i data-lucide="chevron-right" size="32"></i>
             </button>
         </div>
     </section>
 
-    <!-- SECTION 4: WISHES -->
-    <section class="slide-container" id="section-4">
+    <!-- SECTION 5: WISHES -->
+    <section class="slide-container" id="section-5">
         <div style="text-align: center; width: 100%; padding: 20px;">
             <h2>Make a Wish! ✨</h2>
             
@@ -492,14 +665,14 @@
                 </div>
             </div>
 
-            <button class="nav-btn" onclick="fireConfetti(); nextSlide(5)">
+            <button class="nav-btn" onclick="fireConfetti(); nextSlide(6)">
                 <i data-lucide="check" size="32"></i>
             </button>
         </div>
     </section>
 
-    <!-- SECTION 5: FINAL -->
-    <section class="slide-container" id="section-5">
+    <!-- SECTION 6: FINAL -->
+    <section class="slide-container" id="section-6">
         <div class="final-content">
             <div class="big-number">
                 26
@@ -563,6 +736,32 @@
                 music.pause();
                 bars.forEach(b => b.classList.add('paused'));
             }
+        }
+
+        // --- CAKE CUTTING LOGIC ---
+        let isCakeCut = false;
+        function cutTheCake() {
+            if (isCakeCut) return;
+            isCakeCut = true;
+
+            const cake = document.getElementById('cake-wrapper');
+            const btn = document.getElementById('after-cut-btn');
+            const text = document.getElementById('cut-text');
+
+            // Add CSS class to animate
+            cake.classList.add('cut');
+            
+            // Change text
+            text.innerText = "Yummy! 🎉";
+            
+            // Fire confetti
+            fireConfetti();
+
+            // Show button after short delay
+            setTimeout(() => {
+                btn.classList.remove('hidden');
+                btn.style.animation = "pop-in 0.5s forwards";
+            }, 800);
         }
 
         function openModal(title, text) {
