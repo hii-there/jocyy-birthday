@@ -85,7 +85,7 @@
         .bg-floater-mid:nth-child(3) { top: 60%; left: 10%; animation-delay: 4s; font-size: 1.5rem; }
         .bg-floater-mid:nth-child(4) { top: 70%; right: 10%; animation-delay: 1s; font-size: 2.2rem; }
 
-        /* 3. Bottom Floaters (Many, 1/6 Screen) */
+        /* 3. Bottom Floaters (Many, 1/8 Screen) */
         .bg-floater-bottom {
             position: absolute; bottom: -30px; opacity: 0;
             animation: float-fade-bottom 6s linear infinite;
@@ -93,7 +93,7 @@
         @keyframes float-fade-bottom {
             0% { transform: translateY(0) scale(0.5); opacity: 0; }
             20% { opacity: 0.7; }
-            100% { transform: translateY(-20vh) scale(1.2) rotate(20deg); opacity: 0; } /* Max 20vh height (~1/5 screen) */
+            100% { transform: translateY(-13vh) scale(1.2) rotate(20deg); opacity: 0; } /* Max 20vh height (~1/5 screen) */
         }
         
         /* Generating random delays and positions for bottom floaters via CSS n-th child would be long, 
@@ -403,18 +403,14 @@
         <div class="bg-floater-mid">🌸</div>
         <div class="bg-floater-mid">💌</div>
 
-        <!-- 15+ Bottom Floaters (Fade out at 1/6 height) -->
+        <!-- 15+ Bottom Floaters (Fade out at 1/8 height) -->
         <div class="bg-floater-bottom">❤️</div>
-        <div class="bg-floater-bottom">✨</div>
         <div class="bg-floater-bottom">🦋</div>
         <div class="bg-floater-bottom">🌸</div>
-        <div class="bg-floater-bottom">🎀</div>
         <div class="bg-floater-bottom">🌷</div>
         <div class="bg-floater-bottom">💕</div>
-        <div class="bg-floater-bottom">💞</div>
         <div class="bg-floater-bottom">💓</div>
         <div class="bg-floater-bottom">💗</div>
-        <div class="bg-floater-bottom">💘</div>
         <div class="bg-floater-bottom">💝</div>
         <div class="bg-floater-bottom">💐</div>
         <div class="bg-floater-bottom">🌹</div>
