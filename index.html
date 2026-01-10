@@ -139,14 +139,14 @@
             animation: wiggle 0.5s ease-in-out infinite;
         }
         
-        /* --- CAKE STYLES (NEW) --- */
+        /* --- CAKE STYLES (REVISED) --- */
         .cake-wrapper {
             position: relative;
             width: 300px;
             height: 300px;
             display: flex;
             justify-content: center;
-            align-items: flex-end;
+            align-items: flex-end; /* Aligns cake to bottom */
             margin-bottom: 50px;
             cursor: pointer;
         }
@@ -157,6 +157,7 @@
             height: 150px;
             display: flex;
             justify-content: center;
+            z-index: 2; /* Ensures cake body is above candle base */
         }
         
         .cake-half {
@@ -201,17 +202,18 @@
         .cake-half.left .strawberry { left: 20px; transform: rotate(-10deg); }
         .cake-half.right .strawberry { right: 20px; transform: rotate(10deg); }
 
+        /* REVISI: Lilin menempel pas di atas kue */
         .candle {
             position: absolute;
-            top: -90px;
+            bottom: 145px; /* Menempel di atas kue (tinggi kue 150px, sunk 5px) */
             left: 50%;
             transform: translateX(-50%);
             width: 15px;
             height: 80px;
             background: repeating-linear-gradient(45deg, #fff, #fff 5px, #fbc2eb 5px, #fbc2eb 10px);
             border-radius: 5px;
-            z-index: 1;
-            transition: opacity 0.5s;
+            z-index: 1; /* Di belakang icing agar terlihat tertanam */
+            transition: opacity 0.5s, transform 1s;
         }
 
         .flame {
@@ -233,22 +235,22 @@
             100% { transform: translateX(-50%) scale(0.9) rotate(-1deg); opacity: 0.8; }
         }
 
-        /* Knife */
+        /* REVISI: Pisau berada tepat di atas lilin/api */
         .knife {
             position: absolute;
-            top: -50px;
+            bottom: 270px; /* Posisi di atas api lilin */
             left: 50%;
             transform: translateX(-50%) rotate(-45deg);
             font-size: 4rem;
             z-index: 10;
             transition: all 0.5s;
-            pointer-events: none; /* Let clicks pass to cake wrapper */
+            pointer-events: none;
             animation: float-knife 2s infinite ease-in-out;
         }
 
         @keyframes float-knife {
-            0%, 100% { top: -60px; }
-            50% { top: -80px; }
+            0%, 100% { bottom: 270px; }
+            50% { bottom: 290px; }
         }
 
         /* CUT Animation Classes */
@@ -263,7 +265,7 @@
             transform: translateX(-50%) translateY(50px);
         }
         .cake-wrapper.cut .knife {
-            top: 20px;
+            bottom: 100px; /* Pisau turun ke bawah saat memotong */
             opacity: 0;
             transform: translateX(-50%) rotate(-90deg) scale(0.5);
         }
