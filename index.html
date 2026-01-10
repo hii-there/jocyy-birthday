@@ -52,21 +52,6 @@
             pointer-events: none; z-index: 1; overflow: hidden;
         }
 
-        /* 1. Kupu-kupu (Elegant Zig-Zag & Transparent) */
-        .butterfly {
-            position: absolute; bottom: -50px; left: 50%;
-            font-size: 2.5rem; opacity: 0; z-index: 2;
-            animation: butterfly-fly 26s linear infinite; /* Sedikit diperlambat agar elegan */
-        }
-        @keyframes butterfly-fly {
-            0% { transform: translate(0, 0) rotate(0deg) scale(0.8); opacity: 0; }
-            10% { opacity: 0.6; } /* Transparan */
-            25% { transform: translate(60px, -25vh) rotate(25deg) scale(1); } 
-            50% { transform: translate(-60px, -50vh) rotate(-25deg) scale(0.9); }
-            75% { transform: translate(40px, -75vh) rotate(10deg) scale(1); }
-            90% { opacity: 0.6; } /* Transparan */
-            100% { transform: translate(0, -110vh) rotate(0deg) scale(0.8); opacity: 0; }
-        }
 
         /* 2. Middle Floaters (Max 4) */
         .bg-floater-mid {
@@ -92,7 +77,7 @@
         @keyframes float-fade-bottom {
             0% { transform: translateY(0) scale(0.5); opacity: 0; }
             20% { opacity: 0.7; }
-            100% { transform: translateY(-15vh) scale(1.2) rotate(20deg); opacity: 0; } /* Naik sampai 15% layar */
+            100% { transform: translateY(-7vh) scale(1) rotate(20deg); opacity: 0; } /* Naik sampai 15% layar */
         }
         
         /* PERBAIKAN PENTING:
@@ -407,9 +392,6 @@
         <div class="bg-floater-bottom">🌼</div>
     </div>
     
-    <!-- Butterfly Element -->
-    <div class="butterfly">🦋</div>
-
     <!-- AUDIO -->
     <audio id="bg-music" loop>
         <source src="https://github.com/undangandigitalku/laguundangan/raw/refs/heads/main/English%20-%20A%20Thousand%20Years%20Real.mp3" type="audio/mpeg">
