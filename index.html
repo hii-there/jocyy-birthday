@@ -33,7 +33,13 @@
         ::-webkit-scrollbar-thumb { background: rgba(255, 154, 158, 0.5); border-radius: 10px; }
 
         /* --- Animations --- */
-        @keyframes float-up { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        @keyframes float-up { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        @keyframes float-random { 
+            0% { transform: translate(0, 0) rotate(0deg); } 
+            33% { transform: translate(10px, -20px) rotate(10deg); }
+            66% { transform: translate(-10px, -40px) rotate(-5deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
         @keyframes wiggle { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
         @keyframes pulse-beat { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
         @keyframes pop-in { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
@@ -42,13 +48,11 @@
         @keyframes rotate-fade { 0% { transform: rotate(-10deg) scale(0.8); opacity: 0; } 100% { transform: rotate(0) scale(1); opacity: 1; } }
         @keyframes exit-fade { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(1.1); filter: blur(5px); } }
         
-        /* New: Zoom In Up Animation (Elegant) */
         @keyframes zoom-in-up {
             0% { opacity: 0; transform: scale(0.8) translateY(50px); }
             100% { opacity: 1; transform: scale(1) translateY(0); }
         }
 
-        /* New: Background Floaters */
         @keyframes float-rotate {
             0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
             10% { opacity: 0.8; }
@@ -100,21 +104,21 @@
         #section-3.active > * { animation: pop-in 1s ease-out forwards; animation-delay: 0.2s; opacity: 0; }
         #section-4.active > * { animation: zoom-in 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; animation-delay: 0.2s; opacity: 0; }
         
-        /* Section 5 (Special Wish) - Revised Entrance */
+        /* Section 5 (Special Wish) */
         #section-5.active h2, #section-5.active p { animation: slide-up-smooth 1s ease-out forwards; animation-delay: 0.2s; opacity: 0; }
         #section-5.active .special-photo-container { animation: zoom-in-up 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; animation-delay: 0.4s; opacity: 0; }
         #section-5.active .btn-main { animation: pop-in 1s ease-out forwards; animation-delay: 0.8s; opacity: 0; }
 
-        /* Section 6 (Gallery) - Increased Stagger Delay (More noticeable) */
+        /* Section 6 (Gallery) - Revised Stagger Delay (Slower) */
         #section-6.active h2, #section-6.active .gallery-hint { animation: slide-up-smooth 1s ease-out forwards; animation-delay: 0.2s; opacity: 0; }
-        #section-6.active .gallery-item { opacity: 0; animation: slide-up-smooth 0.8s ease-out forwards; }
-        #section-6.active .gallery-item:nth-child(1) { animation-delay: 0.2s; }
-        #section-6.active .gallery-item:nth-child(2) { animation-delay: 0.6s; } /* Increased delay */
-        #section-6.active .gallery-item:nth-child(3) { animation-delay: 1.0s; } /* Increased delay */
-        #section-6.active .gallery-item:nth-child(4) { animation-delay: 1.4s; } /* Increased delay */
-        #section-6.active .gallery-item:nth-child(5) { animation-delay: 1.8s; } /* Increased delay */
-        #section-6.active .gallery-item:nth-child(6) { animation-delay: 2.2s; } /* Increased delay */
-        #section-6.active .nav-btn { animation: pop-in 1s ease-out forwards; animation-delay: 2.5s; opacity: 0; }
+        #section-6.active .gallery-item { opacity: 0; animation: slide-up-smooth 1s ease-out forwards; }
+        #section-6.active .gallery-item:nth-child(1) { animation-delay: 0.4s; }
+        #section-6.active .gallery-item:nth-child(2) { animation-delay: 0.9s; }
+        #section-6.active .gallery-item:nth-child(3) { animation-delay: 1.4s; }
+        #section-6.active .gallery-item:nth-child(4) { animation-delay: 1.9s; }
+        #section-6.active .gallery-item:nth-child(5) { animation-delay: 2.4s; }
+        #section-6.active .gallery-item:nth-child(6) { animation-delay: 2.9s; }
+        #section-6.active .nav-btn { animation: pop-in 1s ease-out forwards; animation-delay: 3.2s; opacity: 0; }
 
         /* Section 7 (Wishes) Staggered Entrance */
         #section-7.active .wishes-container .flip-card { opacity: 0; animation: zoom-in-up 0.8s ease-out forwards; }
@@ -126,7 +130,6 @@
         #section-9.active > * { animation: pop-in 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
 
         /* --- STYLES FOR SECTIONS --- */
-        /* Cover */
         .cover-frame {
             background: #fff; padding: 15px 15px 50px 15px; box-shadow: 0 15px 30px rgba(0,0,0,0.1);
             transform: rotate(-3deg); margin-bottom: 20px; width: 260px; animation: float-up 3s infinite ease-in-out;
@@ -138,7 +141,6 @@
         .sub-title { font-size: 1.1rem; color: var(--text); background: rgba(255,255,255,0.8); padding: 5px 15px; border-radius: 20px; margin-bottom: 30px; font-weight: 700; }
         .sticker { position: absolute; font-size: 2.5rem; z-index: 2; filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.1)); }
 
-        /* Envelope */
         .envelope-wrapper {
             position: relative; width: 280px; height: 180px; background: var(--primary); border-radius: 10px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.15); display: flex; justify-content: center; align-items: flex-end;
@@ -158,7 +160,6 @@
         }
         .envelope-wrapper.open .envelope-paper { transform: translateY(-100px); z-index: 4; }
 
-        /* Letter */
         .letter-paper {
             background: #fffdf5; padding: 30px; width: 90%; max-width: 450px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1); position: relative;
@@ -172,7 +173,6 @@
         .letter-content h2 { font-family: 'Pacifico'; color: var(--deep-pink); margin-bottom: 15px; font-size: 1.8rem; }
         .letter-content p { font-size: 1.05rem; line-height: 1.7; color: #555; }
 
-        /* Cake */
         .cake-wrapper { position: relative; width: 280px; height: 280px; display: flex; justify-content: center; align-items: flex-end; margin-bottom: 40px; cursor: pointer; }
         .cake-body { position: relative; width: 200px; height: 140px; display: flex; justify-content: center; z-index: 2; }
         .cake-half { width: 50%; height: 100%; background: #FFC0CB; position: relative; transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s; }
@@ -205,7 +205,6 @@
         .cake-wrapper.cut .candle { opacity: 0; transform: translateX(-50%) translateY(50px) scale(0); }
         .cake-wrapper.cut .knife { bottom: 60px; opacity: 0; transform: translateX(-50%) rotate(-90deg) scale(0.5); }
 
-        /* Special Wish */
         .special-photo-container {
             width: 300px; padding: 10px; background: #fff; border-radius: 15px;
             box-shadow: 0 15px 35px rgba(255, 154, 158, 0.4); transform: rotate(-1deg);
@@ -213,24 +212,14 @@
         }
         .special-photo-container img { width: 100%; height: auto; aspect-ratio: 4/3; object-fit: cover; border-radius: 10px; display: block; }
         
-        /* New: Floating elements container for special wish */
         .floating-elements {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; overflow: hidden;
         }
-        /* Make sure default state is hidden/handled by animation */
-        .float-item { position: absolute; font-size: 2rem; opacity: 0; }
+        .float-item { position: absolute; font-size: 2rem; opacity: 0; animation: float-random 4s infinite ease-in-out; }
         
-        /* Fix static issue: define animations directly */
-        .falling-star {
-            position: absolute; top: -50px; font-size: 2rem; opacity: 0;
-            animation: star-fall 3s linear infinite;
-        }
-        .rising-heart {
-            position: absolute; bottom: -50px; font-size: 2rem; opacity: 0;
-            animation: rise-fade 4s ease-in-out infinite;
-        }
+        .falling-star { position: absolute; top: -50px; font-size: 2rem; opacity: 0; animation: star-fall 3s linear infinite; }
+        .rising-heart { position: absolute; bottom: -50px; font-size: 2rem; opacity: 0; animation: rise-fade 4s ease-in-out infinite; }
 
-        /* Gallery */
         .gallery-container {
             width: 100%; height: 70vh; overflow-y: auto; padding: 10px 20px;
             display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 15px; align-content: start; touch-action: pan-y;
@@ -245,7 +234,6 @@
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; }
         .gallery-hint { margin-bottom: 10px; font-family: 'Caveat', cursive; font-size: 1.5rem; color: var(--deep-pink); animation: pulse-beat 1.5s infinite; text-align: center; }
 
-        /* Wishes */
         .wishes-container {
             display: flex; flex-direction: column; gap: 20px; width: 100%; max-width: 350px;
             height: 65vh; overflow-y: auto; padding: 10px; touch-action: pan-y; padding-bottom: 50px;
@@ -271,51 +259,34 @@
             font-family: 'Nunito'; font-size: 1rem; font-weight: 600; display: flex; align-items: center; justify-content: center; padding: 15px;
         }
         
-        /* Progress Bar */
-        .wishes-progress-container {
-            width: 100%; background-color: #eee; border-radius: 10px; height: 10px; margin-top: 20px; overflow: hidden;
-        }
-        .wishes-progress-bar {
-            height: 100%; width: 0%; background: linear-gradient(90deg, var(--deep-pink), var(--primary)); 
-            border-radius: 10px; transition: width 0.5s ease-in-out;
-        }
+        .wishes-progress-container { width: 100%; background-color: #eee; border-radius: 10px; height: 10px; margin-top: 20px; overflow: hidden; }
+        .wishes-progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, var(--deep-pink), var(--primary)); border-radius: 10px; transition: width 0.5s ease-in-out; }
 
-        /* --- LONG LETTER (OPTIMIZED & CUTE) --- */
         .long-letter-container {
             width: 90%; max-width: 500px; height: 75vh; overflow-y: auto;
-            background: #fff; padding: 30px 40px; border-radius: 5px; /* Boxy paper */
+            background: #fff; padding: 30px 40px; border-radius: 5px;
             box-shadow: 0 15px 40px rgba(0,0,0,0.1); 
-            /* Desain Kertas Bergaris */
             background-image: 
                 linear-gradient(rgba(200, 200, 200, 0.2) 1px, transparent 1px),
                 linear-gradient(90deg, transparent 95%, rgba(255, 182, 193, 0.2) 95%);
             background-size: 100% 2em, 100% 100%;
-            background-color: #fffdf9; /* Slightly yellow paper */
+            background-color: #fffdf9;
             border: 1px solid #e0e0e0;
             touch-action: pan-y; text-align: left;
             position: relative;
         }
-        /* Washi Tape Top */
         .long-letter-container::before {
             content: ''; position: absolute; top: -15px; left: 50%; transform: translateX(-50%) rotate(-2deg);
-            width: 120px; height: 35px; 
-            background-color: rgba(255, 160, 122, 0.7); /* Salmon washi */
-            z-index: 1;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            width: 120px; height: 35px; background-color: rgba(255, 160, 122, 0.7); z-index: 1; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         
         .big-number-container { text-align: center; margin-bottom: 20px; border-bottom: 2px dashed var(--secondary); padding-bottom: 20px; }
         .big-number { font-size: 5rem; font-family: 'Fredoka One'; color: var(--deep-pink); line-height: 1; text-shadow: 3px 3px var(--secondary); display: inline-block; }
         .big-number span { font-size: 1.5rem; color: var(--text); display: block; margin-top: -5px; }
-        
-        .long-letter-text { 
-            font-family: 'Indie Flower', cursive; font-size: 1.3rem; line-height: 2em; color: #444; white-space: pre-wrap; padding-top: 10px;
-        }
-        /* Corner Stickers */
+        .long-letter-text { font-family: 'Indie Flower', cursive; font-size: 1.3rem; line-height: 2em; color: #444; white-space: pre-wrap; padding-top: 10px; }
         .deco-sticker-tl { position: absolute; top: 10px; left: 10px; font-size: 2rem; opacity: 0.9; transform: rotate(-15deg); }
         .deco-sticker-br { position: absolute; bottom: 10px; right: 10px; font-size: 2rem; opacity: 0.9; transform: rotate(15deg); }
 
-        /* Final */
         .letter-photo-frame {
             width: 220px; height: auto; margin: 0 auto 25px auto;
             background: #fff; padding: 10px 10px 40px 10px;
@@ -328,18 +299,23 @@
             width: 80px; height: 25px; background: rgba(255, 182, 193, 0.8); opacity: 0.9;
         }
 
-        /* Modals */
         .modal-base {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8);
             display: flex; justify-content: center; align-items: center; z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.5s;
         }
         .modal-base.active { opacity: 1; pointer-events: all; }
         
-        /* Polaroid Modal */
+        /* Updated Polaroid Modal Animation */
         .polaroid-content {
-            background: #fff; padding: 20px 20px 70px 20px; transform: rotate(-2deg);
+            background: #fff; padding: 20px 20px 70px 20px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3); text-align: center; position: relative; max-width: 320px;
+            opacity: 0; transform: scale(0.5) rotate(-10deg); 
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
+        .polaroid-modal.active .polaroid-content {
+            opacity: 1; transform: scale(1) rotate(-2deg); transition-delay: 0.2s;
+        }
+        
         .polaroid-content::before {
             content: ''; position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
             width: 100px; height: 30px; background: rgba(255, 107, 129, 0.5);
@@ -347,7 +323,6 @@
         .polaroid-content img { width: 100%; height: auto; border: 1px solid #eee; filter: contrast(1.1) saturate(1.1); }
         .polaroid-caption { font-family: 'Indie Flower', cursive; font-size: 1.8rem; margin-top: 20px; color: #333; font-weight: bold; transform: rotate(-1deg); }
 
-        /* Gallery Modal */
         .gallery-modal-content { background: #fff; padding: 15px; border-radius: 15px; max-width: 90%; max-height: 80vh; text-align: center; position: relative; }
         .gallery-modal-content img { max-width: 100%; max-height: 60vh; border-radius: 10px; object-fit: contain; }
         .gallery-caption { margin-top: 15px; font-family: 'Nunito'; font-weight: 700; color: var(--text); font-size: 1.1rem; }
@@ -358,38 +333,27 @@
             font-weight: bold; box-shadow: 0 5px 10px rgba(0,0,0,0.2);
         }
 
-        /* Final Wishes Modal */
         .wishes-complete-content {
             background: #fff; padding: 40px; border-radius: 20px; text-align: center; max-width: 80%;
             box-shadow: 0 15px 30px rgba(255, 105, 180, 0.3); animation: pulse-beat 2s infinite;
         }
 
-        /* Floating Kisses */
         .kiss-particle { position: absolute; font-size: 3rem; pointer-events: none; animation: float-kiss 4s ease-in forwards; z-index: 999; }
 
-        /* New: Background Floaters */
         .bg-floater-container {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 1; overflow: hidden;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; overflow: hidden;
         }
-        .bg-floater {
-            position: absolute; font-size: 1.5rem; opacity: 0;
-            animation: float-rotate linear infinite; bottom: -50px;
-        }
-        /* More floaters & From Middle */
+        .bg-floater { position: absolute; font-size: 1.5rem; opacity: 0; animation: float-rotate linear infinite; bottom: -50px; }
         .bg-floater:nth-child(1) { left: 10%; animation-duration: 15s; animation-delay: 0s; font-size: 2rem; }
         .bg-floater:nth-child(2) { left: 25%; animation-duration: 20s; animation-delay: 2s; font-size: 1.5rem; }
         .bg-floater:nth-child(3) { left: 40%; animation-duration: 18s; animation-delay: 5s; font-size: 2.2rem; }
         .bg-floater:nth-child(4) { left: 55%; animation-duration: 22s; animation-delay: 1s; font-size: 1.8rem; }
         .bg-floater:nth-child(5) { left: 70%; animation-duration: 16s; animation-delay: 8s; font-size: 2rem; }
         .bg-floater:nth-child(6) { left: 85%; animation-duration: 19s; animation-delay: 3s; font-size: 1.5rem; }
-        /* Middle floaters */
         .bg-floater:nth-child(7) { left: 50%; bottom: 20%; animation: rise-fade 8s infinite; animation-delay: 0s; font-size: 2rem; }
         .bg-floater:nth-child(8) { left: 20%; bottom: 40%; animation: rise-fade 10s infinite; animation-delay: 4s; font-size: 1.5rem; }
         .bg-floater:nth-child(9) { left: 80%; bottom: 30%; animation: rise-fade 9s infinite; animation-delay: 2s; font-size: 1.8rem; }
 
-
-        /* Misc */
         .cute-music-btn {
             position: fixed; top: 20px; right: 20px; width: 50px; height: 50px;
             background: #fff; border-radius: 50%; box-shadow: 0 5px 15px rgba(255, 107, 129, 0.4);
@@ -440,6 +404,10 @@
 
     <!-- SECTION 1: COVER -->
     <section class="slide-container active" id="section-1">
+        <div class="floating-elements">
+            <div class="float-item" style="top:20%; left:10%; animation-delay:0s;">🎈</div>
+            <div class="float-item" style="top:60%; right:10%; animation-delay:1s;">✨</div>
+        </div>
         <div class="cover-frame">
             <img src="https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?q=80&w=800&auto=format&fit=crop" alt="Her">
             <div class="sticker" style="top: -10px; right: -10px;">🎀</div>
@@ -453,6 +421,10 @@
 
     <!-- SECTION 2: ENVELOPE -->
     <section class="slide-container" id="section-2">
+        <div class="floating-elements">
+            <div class="float-item" style="top:15%; left:15%; animation-delay:0.5s;">💌</div>
+            <div class="float-item" style="bottom:20%; right:20%; animation-delay:1.5s;">💖</div>
+        </div>
         <h2 style="font-family: 'Pacifico'; color: var(--deep-pink); margin-bottom: 30px;">For My Love...</h2>
         <div class="envelope-wrapper" onclick="openEnvelope()">
             <div class="envelope-flap"></div>
@@ -481,6 +453,10 @@
 
     <!-- SECTION 4: CAKE -->
     <section class="slide-container" id="section-4">
+        <div class="floating-elements">
+            <div class="float-item" style="top:10%; right:15%; animation-delay:0.2s;">🎂</div>
+            <div class="float-item" style="bottom:15%; left:10%; animation-delay:1.2s;">🍩</div>
+        </div>
         <h2 style="font-family: 'Fredoka One'; color: var(--deep-pink); margin-bottom: 40px;">Make a Wish! 🎂</h2>
         <div class="cake-wrapper" id="cake-box" onclick="cutCake()">
             <div class="knife">🔪</div>
@@ -496,7 +472,7 @@
         </button>
     </section>
 
-    <!-- SECTION 5: SPECIAL WISH (Fix: Animated Emojis) -->
+    <!-- SECTION 5: SPECIAL WISH -->
     <section class="slide-container" id="section-5">
         <h2 style="margin-bottom: 20px; color: var(--deep-pink); font-family: 'Fredoka One';">One Special Wish... 💖</h2>
         <p style="margin-bottom: 30px; font-size: 1.1rem; color: #666; text-align: center;">Tutup matamu sejenak, dan ucapkan harapan terbesarmu...</p>
@@ -504,7 +480,6 @@
             <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1000&auto=format&fit=crop" alt="Your Wish">
         </div>
         
-        <!-- Fixed: Animations for top-left icons -->
         <div class="floating-elements">
             <div class="falling-star" style="left:10%; animation-delay:0s;">🌟</div>
             <div class="falling-star" style="left:85%; animation-delay:1.5s;">🌟</div>
@@ -523,7 +498,6 @@
         <div class="gallery-hint">Tap photo to see detail! 👇</div>
         
         <div class="gallery-container">
-            <!-- 6 Photos with staggered entrance -->
             <div class="gallery-item" onclick="showGalleryModal('https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?q=80&w=687&auto=format&fit=crop', 'Sweet memory 1')"><img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?q=80&w=687&auto=format&fit=crop"></div>
             <div class="gallery-item" onclick="showGalleryModal('https://images.unsplash.com/photo-1621112904887-419379ce6824?q=80&w=1744&auto=format&fit=crop', 'Sweet memory 2')"><img src="https://images.unsplash.com/photo-1621112904887-419379ce6824?q=80&w=1744&auto=format&fit=crop"></div>
             <div class="gallery-item" onclick="showGalleryModal('https://images.unsplash.com/photo-1523438097201-512ae7d59c44?q=80&w=687&auto=format&fit=crop', 'Sweet memory 3')"><img src="https://images.unsplash.com/photo-1523438097201-512ae7d59c44?q=80&w=687&auto=format&fit=crop"></div>
@@ -539,6 +513,10 @@
 
     <!-- SECTION 7: WISHES (FLIP CARDS) -->
     <section class="slide-container" id="section-7">
+        <div class="floating-elements">
+            <div class="float-item" style="top:10%; left:10%; animation-delay:0s;">🌟</div>
+            <div class="float-item" style="bottom:10%; right:10%; animation-delay:1s;">✨</div>
+        </div>
         <h2 style="font-family: 'Fredoka One'; color: var(--deep-pink); margin-bottom: 20px;">My Wishes for You ✨</h2>
         <p style="margin-bottom: 20px; font-size: 0.9rem;">Tap all cards to reveal!</p>
         
@@ -569,16 +547,14 @@
         <div style="text-align:center; margin-top:5px; font-size:0.8rem; color:#888;">Progress: <span id="wishesCount">0</span>/3</div>
     </section>
 
-    <!-- SECTION 8: LONG LETTER (REDESIGNED) -->
+    <!-- SECTION 8: LONG LETTER -->
     <section class="slide-container" id="section-8">
         <div class="long-letter-container">
             <div class="deco-sticker-tl">📌</div>
             <div class="deco-sticker-br">💖</div>
-            
             <div class="big-number-container">
                 <div class="big-number">26<span>Years Loved!</span></div>
             </div>
-
             <div class="long-letter-text">
 Dear Sayangku,
 
@@ -600,10 +576,13 @@ Yours,
         </div>
     </section>
 
-    <!-- SECTION 9: FINAL (EMOJI FADE UP GALORE) -->
+    <!-- SECTION 9: FINAL -->
     <section class="slide-container" id="section-9">
+        <div class="floating-elements">
+            <div class="float-item" style="top:30%; left:20%; animation-delay:0s;">🥰</div>
+            <div class="float-item" style="top:50%; right:20%; animation-delay:1.2s;">💏</div>
+        </div>
         <div class="letter-photo-frame">
-            <!-- Ganti URL foto ini dengan foto doi -->
             <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=800&auto=format&fit=crop" alt="My Love">
         </div>
         <h2 style="margin-top: 30px; color: var(--deep-pink);">Happy Birthday!</h2>
@@ -618,8 +597,6 @@ Yours,
                 <i data-lucide="rotate-ccw"></i> Replay Surprise
             </button>
         </div>
-        
-        <!-- Extra fade up emojis for closing -->
         <div class="floating-elements">
             <div class="bg-floater" style="left:10%; animation-delay:0s;">🥰</div>
             <div class="bg-floater" style="left:30%; animation-delay:1s;">🥳</div>
@@ -666,7 +643,6 @@ Yours,
     <script>
         lucide.createIcons();
 
-        // Music
         const music = document.getElementById('bg-music');
         const musicBtn = document.querySelector('.cute-music-btn');
         function toggleMusic() {
@@ -679,7 +655,6 @@ Yours,
             }
         }
 
-        // Navigation
         function delayedNext(id) {
             fireConfetti(); 
             const current = document.querySelector('.slide-container.active');
@@ -699,13 +674,11 @@ Yours,
             }, 600);
         }
 
-        // Envelope
         function openEnvelope() {
             document.querySelector('.envelope-wrapper').classList.add('open');
             setTimeout(() => delayedNext(3), 1500);
         }
 
-        // Cake
         let isCakeCut = false;
         function cutCake() {
             if(isCakeCut) return;
@@ -718,7 +691,6 @@ Yours,
             }, 1000);
         }
 
-        // Gallery Modal
         function showGalleryModal(src, caption) {
             document.getElementById('modalImg').src = src;
             document.getElementById('modalCaption').innerText = caption;
@@ -728,44 +700,38 @@ Yours,
             document.getElementById('galleryModal').classList.remove('active');
         }
 
-        // Wishes Flip Logic
         let flippedCount = 0;
         function flipCard(card) {
             if(!card.classList.contains('flipped')) {
                 card.classList.add('flipped');
                 flippedCount++;
                 
-                // Update Progress
                 document.getElementById('wishesCount').innerText = flippedCount;
                 document.getElementById('wishesProgressBar').style.width = (flippedCount / 3 * 100) + '%';
 
                 if(flippedCount === 3) {
-                    // Delay before showing next step
                     setTimeout(() => {
                         document.getElementById('finalLetterModal').classList.add('active');
                         fireConfetti();
-                    }, 3000); // 3 Seconds Delay
+                    }, 3000);
                 }
             }
         }
 
-        // Open Final Letter Slide
         function openFinalLetterSlide() {
             document.getElementById('finalLetterModal').classList.remove('active');
             delayedNext(8);
         }
 
-        // Polaroid Popup Logic
         function showPolaroidSurprise() {
             fireConfetti();
             document.getElementById('polaroidModal').classList.add('active');
         }
         function closePolaroidAndNext() {
             document.getElementById('polaroidModal').classList.remove('active');
-            delayedNext(6); // Continue to Gallery
+            delayedNext(6);
         }
 
-        // Kisses Effect
         function sendKisses() {
             for (let i = 0; i < 30; i++) {
                 createKiss();
@@ -787,7 +753,6 @@ Yours,
             }, 5000);
         }
 
-        // Optimized Confetti
         const canvas = document.getElementById('confetti-canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
