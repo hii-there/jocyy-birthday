@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Happy 26th Birthday, Dear!</title>
-    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700&family=Pacifico&family=Caveat:wght@700&family=Indie+Flower&display=swap" rel="stylesheet">
-    <!-- Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
@@ -52,8 +50,6 @@
             pointer-events: none; z-index: 1; overflow: hidden;
         }
 
-
-        /* 2. Middle Floaters (Max 4) */
         .bg-floater-mid {
             position: absolute; opacity: 0;
             animation: rise-mid-float 8s ease-in-out infinite;
@@ -69,7 +65,6 @@
         .bg-floater-mid:nth-child(3) { top: 60%; left: 10%; animation-delay: 4s; font-size: 1.5rem; }
         .bg-floater-mid:nth-child(4) { top: 70%; right: 10%; animation-delay: 1s; font-size: 2.2rem; }
 
-        /* 3. Bottom Floaters (ACAK POSISI AGAR TIDAK MENUMPUK DI KIRI) */
         .bg-floater-bottom {
             position: absolute; bottom: -30px; opacity: 0;
             animation: float-fade-bottom 6s linear infinite;
@@ -77,13 +72,9 @@
         @keyframes float-fade-bottom {
             0% { transform: translateY(0) scale(0.5); opacity: 0; }
             20% { opacity: 0.7; }
-            100% { transform: translateY(-7vh) scale(1) rotate(20deg); opacity: 0; } /* Naik sampai 15% layar */
+            100% { transform: translateY(-7vh) scale(1) rotate(20deg); opacity: 0; }
         }
         
-        /* PERBAIKAN PENTING:
-           Urutan nth-child dimulai dari 5 karena ada 4 elemen .bg-floater-mid sebelumnya.
-           Posisi 'left' diacak (kiri, kanan, tengah, kiri, kanan...) agar berapapun jumlahnya tetap menyebar.
-        */
         .bg-floater-bottom:nth-child(5) { left: 10%; animation-duration: 5s; animation-delay: 0s; font-size: 1.2rem; }
         .bg-floater-bottom:nth-child(6) { left: 85%; animation-duration: 7s; animation-delay: 1s; font-size: 1.5rem; }
         .bg-floater-bottom:nth-child(7) { left: 45%; animation-duration: 6s; animation-delay: 3s; font-size: 1rem; }
@@ -92,7 +83,6 @@
         .bg-floater-bottom:nth-child(10) { left: 90%; animation-duration: 7.5s; animation-delay: 4s; font-size: 1.6rem; }
         .bg-floater-bottom:nth-child(11) { left: 5%; animation-duration: 6.5s; animation-delay: 1.5s; font-size: 1.4rem; }
         .bg-floater-bottom:nth-child(12) { left: 60%; animation-duration: 5s; animation-delay: 0.2s; font-size: 1.9rem; }
-
 
         /* UI Components */
         .btn-main {
@@ -126,16 +116,17 @@
         #section-5.active .special-photo-container { animation: zoom-in-up 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; animation-delay: 0.4s; opacity: 0; }
         #section-5.active .btn-main { animation: pop-in 1s ease-out forwards; animation-delay: 0.8s; opacity: 0; }
 
-        /* Section 6 (Gallery) */
+        /* Section 6 (Gallery) - UPDATED FOR DYNAMIC ITEMS */
         #section-6.active h2, #section-6.active .gallery-hint { animation: slide-up-smooth 1s ease-out forwards; animation-delay: 0.2s; opacity: 0; }
-        #section-6.active .gallery-item { opacity: 0; animation: slide-up-smooth 1s ease-out forwards; }
-        #section-6.active .gallery-item:nth-child(1) { animation-delay: 0.4s; }
-        #section-6.active .gallery-item:nth-child(2) { animation-delay: 0.9s; }
-        #section-6.active .gallery-item:nth-child(3) { animation-delay: 1.4s; }
-        #section-6.active .gallery-item:nth-child(4) { animation-delay: 1.9s; }
-        #section-6.active .gallery-item:nth-child(5) { animation-delay: 2.4s; }
-        #section-6.active .gallery-item:nth-child(6) { animation-delay: 2.9s; }
-        #section-6.active .nav-btn { animation: pop-in 1s ease-out forwards; animation-delay: 3.2s; opacity: 0; }
+        
+        /* Default state for items, animation handled by JS now */
+        #section-6.active .gallery-item { 
+            opacity: 0; 
+            animation: slide-up-smooth 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; 
+        }
+        
+        /* Button appears after a set time, not dependent on item count */
+        #section-6.active .nav-btn { animation: pop-in 1s ease-out forwards; animation-delay: 2.5s; opacity: 0; }
 
         /* Section 7 (Wishes) */
         #section-7.active .wishes-container .flip-card { opacity: 0; animation: zoom-in-up 0.8s ease-out forwards; }
@@ -239,6 +230,7 @@
         .gallery-container {
             width: 100%; height: 70vh; overflow-y: auto; padding: 10px 20px;
             display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 15px; align-content: start; touch-action: pan-y;
+            padding-bottom: 100px; /* Space for button */
         }
         .gallery-item {
             background: #fff; padding: 8px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
@@ -373,15 +365,12 @@
 </head>
 <body>
 
-    <!-- Background Elements Container -->
     <div class="bg-floater-container">
-        <!-- 4 Middle Floaters (Restricted) -->
         <div class="bg-floater-mid">✨</div>
         <div class="bg-floater-mid">💖</div>
         <div class="bg-floater-mid">🌸</div>
 
 
-        <!-- Many Bottom Floaters (Distributed Randomly Left/Right/Center) -->
         <div class="bg-floater-bottom">❤️</div>
         <div class="bg-floater-bottom">✨</div>
         <div class="bg-floater-bottom">🌸</div>
@@ -392,7 +381,6 @@
         <div class="bg-floater-bottom">🌼</div>
     </div>
     
-    <!-- AUDIO -->
     <audio id="bg-music" loop>
         <source src="https://github.com/undangandigitalku/laguundangan/raw/refs/heads/main/English%20-%20A%20Thousand%20Years%20Real.mp3" type="audio/mpeg">
     </audio>
@@ -400,13 +388,11 @@
         <i data-lucide="music"></i>
     </div>
 
-    <!-- CANVAS CONFETTI -->
     <canvas id="confetti-canvas"></canvas>
 
-    <!-- SECTION 1: COVER -->
     <section class="slide-container active" id="section-1">
         <div class="cover-frame">
-            <img src="https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?q=80&w=800&auto=format&fit=crop" alt="Her">
+            <img src="foto/2024 06 28.jpg" alt="Her">
             <div class="sticker" style="top: -10px; right: -10px;">🎀</div>
         </div>
         <h1>Happy 26th!</h1>
@@ -416,7 +402,6 @@
         </button>
     </section>
 
-    <!-- SECTION 2: ENVELOPE -->
     <section class="slide-container" id="section-2">
         <h2 style="font-family: 'Pacifico'; color: var(--deep-pink); margin-bottom: 30px;">For My Love...</h2>
         <div class="envelope-wrapper" onclick="openEnvelope()">
@@ -425,15 +410,14 @@
         </div>
     </section>
 
-    <!-- SECTION 3: LETTER -->
     <section class="slide-container" id="section-3">
         <div class="letter-paper">
             <div class="sticker" style="top: -20px; right: -10px;">🧸</div>
             <div class="letter-content">
-                <h2>Dear, My Love... 💌</h2>
+                <h2>Dear Jocy... 💌</h2>
                 <p>
                     Happy 26th Birthday, Sayang! ✨<br><br>
-                    Terima kasih sudah lahir ke dunia dan jadi bagian terindah dalam hidupku.
+                    Terima kasih sudah lahir ke dunia dan jadi ikut melukiskan bagian-bagian dalam hidupku. Kamu memberi warna pada hari-hariku, memberi arah ditengah kebimbanganku, dan menguatkanku ditengah kerapuhanku.<br>
                     Aku bangga banget sama semua pencapaian kamu. Semoga tahun ini penuh tawa, cinta, dan rezeki yang melimpah.<br><br>
                     <i>I Love You so much!</i> ❤️
                 </p>
@@ -444,7 +428,6 @@
         </button>
     </section>
 
-    <!-- SECTION 4: CAKE -->
     <section class="slide-container" id="section-4">
         <h2 style="font-family: 'Fredoka One'; color: var(--deep-pink); margin-bottom: 40px;">Make a Wish! 🎂</h2>
         <div class="cake-wrapper" id="cake-box" onclick="cutCake()">
@@ -461,12 +444,11 @@
         </button>
     </section>
 
-    <!-- SECTION 5: SPECIAL WISH -->
     <section class="slide-container" id="section-5">
         <h2 style="margin-bottom: 20px; color: var(--deep-pink); font-family: 'Fredoka One';">One Special Wish... 💖</h2>
         <p style="margin-bottom: 30px; font-size: 1.1rem; color: #666; text-align: center;">Tutup matamu sejenak, dan ucapkan harapan terbesarmu...</p>
         <div class="special-photo-container">
-            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1000&auto=format&fit=crop" alt="Your Wish">
+            <img src="foto/arsip (2) cr.jpg" alt="Your Wish">
         </div>
         
         <div class="floating-elements">
@@ -481,18 +463,84 @@
         </button>
     </section>
 
-    <!-- SECTION 6: GALLERY -->
     <section class="slide-container" id="section-6">
         <h2 style="font-family: 'Fredoka One'; color: var(--deep-pink); margin-bottom: 10px;">Our Cute Moments 📸</h2>
         <div class="gallery-hint">Tap photo to see detail! 👇</div>
         
         <div class="gallery-container">
-            <div class="gallery-item" onclick="showGalleryModal('https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?q=80&w=687&auto=format&fit=crop', 'Sweet memory 1')"><img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?q=80&w=687&auto=format&fit=crop"></div>
-            <div class="gallery-item" onclick="showGalleryModal('https://images.unsplash.com/photo-1621112904887-419379ce6824?q=80&w=1744&auto=format&fit=crop', 'Sweet memory 2')"><img src="https://images.unsplash.com/photo-1621112904887-419379ce6824?q=80&w=1744&auto=format&fit=crop"></div>
-            <div class="gallery-item" onclick="showGalleryModal('https://images.unsplash.com/photo-1523438097201-512ae7d59c44?q=80&w=687&auto=format&fit=crop', 'Sweet memory 3')"><img src="https://images.unsplash.com/photo-1523438097201-512ae7d59c44?q=80&w=687&auto=format&fit=crop"></div>
-            <div class="gallery-item" onclick="showGalleryModal('https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?q=80&w=1738&auto=format&fit=crop', 'Sweet memory 4')"><img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?q=80&w=1738&auto=format&fit=crop"></div>
-            <div class="gallery-item" onclick="showGalleryModal('https://images.unsplash.com/photo-1542596594-649edbc13630?q=80&w=800&auto=format&fit=crop', 'Sweet memory 5')"><img src="https://images.unsplash.com/photo-1542596594-649edbc13630?q=80&w=800&auto=format&fit=crop"></div>
-            <div class="gallery-item" onclick="showGalleryModal('https://images.unsplash.com/photo-1517263904808-5dc8b43b1c3f?q=80&w=800&auto=format&fit=crop', 'Sweet memory 6')"><img src="https://images.unsplash.com/photo-1517263904808-5dc8b43b1c3f?q=80&w=800&auto=format&fit=crop"></div>
+            <div class="gallery-item" onclick="showGalleryModal('foto/2020.jpg', 'Ini foto profile WA kamu sewaktu pertama kali kita ngobrol. Senang rasanya bisa mengenalmu saat itu ^^. Aku inget info WA profilemu isinya gini, May your day be blessed with many giggles. Momen itu selalu aku ingattt ❤️')"><img src="foto/2020.jpg"></div>
+            <div class="gallery-item" onclick="showGalleryModal('foto/2020 11 29.jpg', 'Ini pap pertamamu ke aku waktu itu (2020 11 29)')"><img src="foto/2020 11 29.jpg"></div>
+            <div class="gallery-item" onclick="showGalleryModal('foto/2020 12 10.jpg', 'awal awal pdkt, katanya ga pd kirim pap 😜😜')"><img src="foto/2020 12 10.jpg"></div>
+            <div class="gallery-item" onclick="showGalleryModal('foto/2021 01 11.jpg', 'Ini fotomu sewaktu ultah ke 21! You Looks cute!! (2021 01 11)')"><img src="foto/2021 01 11.jpg"></div>
+            <div class="gallery-item" onclick="showGalleryModal('foto/2021 05 16.jpg', 'Stikernya lucu! (2021 05 16)')"><img src="foto/2021 05 16.jpg"></div>
+            <div class="gallery-item" onclick="showGalleryModal('foto/2021 06 22.jpg', 'Ini waktu kamu nemenin aku ngantar surat permohonan PKL ke kantor BPJS waktu itu (2021 06 22)')"><img src="foto/2021 06 22.jpg"></div>
+<div class="gallery-item" onclick="showGalleryModal('foto/2022 05 20.jpg', 'Kamu baru selesai catokan, lalu kirim pap ke aku dan bilang kamu pengen rambutmu gini aja terus setiap hari (2022 05 20)')"><img src="foto/2022 05 20.jpg"></div>
+
+            <div class="gallery-item" onclick="showGalleryModal('foto/2022 05 28.jpeg', 'ini waktu kita lagi minum es kelapa di mencirim, tempat nongkrongnya banyak sawit sawit :D (2022 05 28)')"><img src="foto/2022 05 28.jpeg"></div>
+
+            <div class="gallery-item" onclick="showGalleryModal('foto/2022 06 01.jpeg', 'ini waktu kita ke ngedate ke wisata air percut, mungkin ini satu satunya foto bareng kita yang bagus hasilnya XD (2022 06 01)')"><img src="foto/2022 06 01.jpeg"></div>
+
+            <div class="gallery-item" onclick="showGalleryModal('foto/2022 06 01 (2).jpeg', 'the evil smile 😈😈😈 (2022 06 01)')"><img src="foto/2022 06 01 (2).jpeg"></div>
+
+            <div class="gallery-item" onclick="showGalleryModal('foto/2022 12 13.jpg', 'tidak untuk ditiru XD (2022 12 13)')"><img src="foto/2022 12 13.jpg"></div>
+
+            <div class="gallery-item" onclick="showGalleryModal('foto/2022 12 15.jpg', 'ini stori WA kamu waktu pulang dari lomba koor Kabupaten, izin skrinsutt (2022 12 15)')"><img src="foto/2022 12 15.jpg"></div>
+
+            <div class="gallery-item" onclick="showGalleryModal('foto/2023 03 02.jpg', 'semangat bangg! (2023 03 02)')"><img src="foto/2023 03 02.jpg"></div>
+
+            <div class="gallery-item" onclick="showGalleryModal('foto/2023 04 10.jpg', 'ini waktu kamu magang di pegadaian eh tapi hujan, jadinya kamu gabisa langsung balik (2023 04 10)')"><img src="foto/2023 04 10.jpg"></div>
+
+            <div class="gallery-item" onclick="showGalleryModal('foto/2023 06 20 (2).jpg', 'ini waktu kamu lagi demen hias rambut, dan pap ke aku hasilnya (2023 06 20)')"><img src="foto/2023 06 20 (2).jpg"></div>
+
+            <div class="gallery-item" onclick="showGalleryModal('foto/2023 06 20.jpg', 'mirror selfie yang sangat apa 🔥🔥 khas dengan pakaian yang sangat fashionable (2023 06 20)')"><img src="foto/2023 06 20.jpg"></div>
+
+            <div class="gallery-item" onclick="showGalleryModal('foto/2023 10 21 (2).jpg', 'ini ekspresimu ketika aku mau coba gombalin (2023 10 21)')"><img src="foto/2023 10 21 (2).jpg"></div>
+
+            <div class="gallery-item" onclick="showGalleryModal('foto/2023 10 21.jpg', 'makasih udah disuapin >< (2023 10 21)')"><img src="foto/2023 10 21.jpg"></div>
+
+            <div class="gallery-item" onclick="showGalleryModal('foto/2023 11 30.jpg', 'the semporatulation girl!! (2023 11 30)')"><img src="foto/2023 11 30.jpg"></div>
+
+            <div class="gallery-item" onclick="showGalleryModal('foto/2023 11 30 (2).jpg', 'sama aja, tapi lidahnya melet 😜😜 (2023 11 30)')"><img src="foto/2023 11 30 (2).jpg"></div>
+
+            <div class="gallery-item" onclick="showGalleryModal('foto/2023 12 31.jpg', 'bentar bang, lagi di gereja ibadah akhir tahun nih (2023 12 31)')"><img src="foto/2023 12 31.jpg"></div>
+
+            <div class="gallery-item" onclick="showGalleryModal('foto/2024 01 14 (2).jpg', 'gerah banget bjir (2024 01 14)')"><img src="foto/2024 01 14 (2).jpg"></div>
+
+            <div class="gallery-item" onclick="showGalleryModal('foto/2024 01 14 (3).jpg', 'menyala bibirkuu 🔥🔥🔥 (2024 01 14)')"><img src="foto/2024 01 14 (3).jpg"></div>
+
+            <div class="gallery-item" onclick="showGalleryModal('foto/2024 01 14.jpg', 'jocy dan mirror selfienya (2024 01 14)')"><img src="foto/2024 01 14.jpg"></div>
+
+            <div class="gallery-item" onclick="showGalleryModal('foto/2024 06 28 (2).jpg', 'mirror selfie dengan baju putii (2024 06 28)')"><img src="foto/2024 06 28 (2).jpg"></div>
+
+            <div class="gallery-item" onclick="showGalleryModal('foto/2024 06 28.jpg', 'cantikan mode normal atau hitam putih bwang? (2024 06 28)')"><img src="foto/2024 06 28.jpg"></div>
+
+            <div class="gallery-item" onclick="showGalleryModal('foto/2024 07 11.jpg', 'momen kamu bantuin aku aku sortir casing dan antigores, waktu itu kita lagi diem-dieman, tapi kamu mau aku jemput buat bantuin! pulangnya hujan hujanan, lalu kita neduh didepan ruko orang >< (2024 07 11)')"><img src="foto/2024 07 11.jpg"></div>
+
+            <div class="gallery-item" onclick="showGalleryModal('foto/2024 07 17.jpg', 'pap ketika gerahhh (2024 07 17)')"><img src="foto/2024 07 17.jpg"></div>
+
+            <div class="gallery-item" onclick="showGalleryModal('foto/2024 07 19.jpg', 'abis beres beres rumah (2024 07 19)')"><img src="foto/2024 07 19.jpg"></div>
+
+            <div class="gallery-item" onclick="showGalleryModal('foto/2024 07 20.jpg', 'hi bwangg! (2024 07 20)')"><img src="foto/2024 07 20.jpg"></div>
+
+            <div class="gallery-item" onclick="showGalleryModal('foto/2024 08 20.jpg', 'waktu itu aku sakit, kamu anterin aku obat dan beberapa vitamin, bahkan kamu sampe nungguin aku didepan pagar lebih dari 1 jam waktu ituu (2024 08 20)')"><img src="foto/2024 08 20.jpg"></div>
+
+            <div class="gallery-item" onclick="showGalleryModal('foto/2024 10 29.jpg', 'ini pap kamu lagi mau ambil sample darah waktu itu! aku senang kamu bisa pulih dan kembali bahagiaaa (2024 10 29)')"><img src="foto/2024 10 29.jpg"></div>
+
+            <div class="gallery-item" onclick="showGalleryModal('foto/2025 03 09.jpeg', 'ini waktu kita jogging di USUUUU (2025 03 09)')"><img src="foto/2025 03 09.jpeg"></div>
+
+            <div class="gallery-item" onclick="showGalleryModal('foto/2025 03 20.jpg', 'it officially done! congrats for your S.Pd dear! (2025 03 20)')"><img src="foto/2025 03 20.jpg"></div>
+
+            <div class="gallery-item" onclick="showGalleryModal('foto/2025 04 16.jpeg', 'ini waktu kita jogging ke royal! the pink hat girl (2025 04 16)')"><img src="foto/2025 04 16.jpeg"></div>
+
+            <div class="gallery-item" onclick="showGalleryModal('foto/2025 07 12.jpeg', 'kamu mau balik, tapi hujan, jadinya neduh bentar di indomaret (2025 07 12)')"><img src="foto/2025 07 12.jpeg"></div>
+
+            <div class="gallery-item" onclick="showGalleryModal('foto/arsip (2).jpg', 'arsip dibuang sayang, aku gatau tahunnya kapan ><')"><img src="foto/arsip (2).jpg"></div>
+
+            <div class="gallery-item" onclick="showGalleryModal('foto/arsip (3).jpg', 'pap waktu diladang ladang XD')"><img src="foto/arsip (3).jpg"></div>
+
+            <div class="gallery-item" onclick="showGalleryModal('foto/arsip (4).jpg', 'jocy waktu maba, masik polos polos')"><img src="foto/arsip (4).jpg"></div>
+
+            <div class="gallery-item" onclick="showGalleryModal('foto/arsip.jpg', 'arsip dibuang sayang, aku gatau tahunnya kapan ><')"><img src="foto/arsip.jpg"></div>
         </div>
 
         <button class="nav-btn" onclick="delayedNext(7)">
@@ -500,7 +548,6 @@
         </button>
     </section>
 
-    <!-- SECTION 7: WISHES (FLIP CARDS) -->
     <section class="slide-container" id="section-7">
         <h2 style="font-family: 'Fredoka One'; color: var(--deep-pink); margin-bottom: 20px;">My Wishes for You ✨</h2>
         <p style="margin-bottom: 20px; font-size: 0.9rem;">Tap all cards to reveal!</p>
@@ -508,20 +555,20 @@
         <div class="wishes-container">
             <div class="flip-card" onclick="flipCard(this)">
                 <div class="flip-card-inner">
-                    <div class="flip-card-front"><img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=800&auto=format&fit=crop"><div class="flip-card-overlay"><div class="flip-card-title"><i data-lucide="heart"></i> Health</div></div></div>
-                    <div class="flip-card-back">Semoga kamu sehat selalu, panjang umur, dan dijauhkan dari segala penyakit. Aamiin! 💪</div>
+                    <div class="flip-card-front"><img src="foto/health.jpg"><div class="flip-card-overlay"><div class="flip-card-title"><i data-lucide="heart"></i> Health</div></div></div>
+                    <div class="flip-card-back">Semoga kamu sehat selalu, panjang umur, hari-harimu dipenuhi senyum, canda dan tawa. Aamiin! 💪</div>
                 </div>
             </div>
             <div class="flip-card" onclick="flipCard(this)">
                 <div class="flip-card-inner">
-                    <div class="flip-card-front"><img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=800&auto=format&fit=crop"><div class="flip-card-overlay"><div class="flip-card-title"><i data-lucide="briefcase"></i> Career</div></div></div>
-                    <div class="flip-card-back">Semoga karirmu makin cemerlang, rezeki lancar, dan semua target tercapai tahun ini! 🚀</div>
+                    <div class="flip-card-front"><img src="foto/career.jpg"><div class="flip-card-overlay"><div class="flip-card-title"><i data-lucide="briefcase"></i> Career</div></div></div>
+                    <div class="flip-card-back">Semoga karirmu makin cemerlang, rezeki lancar, dan semua target tercapai tahun ini! 🚀 Aku bahagia untuk setiap pencapaianmu ^^</div>
                 </div>
             </div>
             <div class="flip-card" onclick="flipCard(this)">
                 <div class="flip-card-inner">
-                    <div class="flip-card-front"><img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=800&auto=format&fit=crop"><div class="flip-card-overlay"><div class="flip-card-title"><i data-lucide="smile"></i> Us</div></div></div>
-                    <div class="flip-card-back">Semoga kita makin langgeng, saling mengerti, dan bahagia selamanya. Love you! ❤️</div>
+                    <div class="flip-card-front"><img src="foto/us.jpg"><div class="flip-card-overlay"><div class="flip-card-title"><i data-lucide="smile"></i> Us</div></div></div>
+                    <div class="flip-card-back">Aminku yang paling dalam adalah bisa terus bersama denganmu, terus berada disampingmu, mendengarkan ceritamu, jadi tempat sandaranmu, dan selalu menguatkamu ❤️</div>
                 </div>
             </div>
         </div>
@@ -532,7 +579,6 @@
         <div style="text-align:center; margin-top:5px; font-size:0.8rem; color:#888;">Progress: <span id="wishesCount">0</span>/3</div>
     </section>
 
-    <!-- SECTION 8: LONG LETTER -->
     <section class="slide-container" id="section-8">
         <div class="long-letter-container">
             <div class="deco-sticker-tl">📌</div>
@@ -544,16 +590,18 @@
 Dear Sayangku,
 
 Selamat ulang tahun yang ke-26! 🎉
-Di usia yang baru ini, aku cuma mau bilang betapa bersyukurnya aku punya kamu. Kamu adalah alasan di balik banyak senyumku setiap hari.
+Di usia yang baru ini, aku cuma mau bilang betapa bersyukurnya aku punya kamu. Kamu adalah alasan di balik banyak kuatnya aku melangkah setiap hari.
 
 Terima kasih sudah jadi orang yang kuat, sabar, dan penuh kasih sayang. Aku tau hidup ga selalu mudah, tapi aku janji bakal selalu ada di samping kamu, dukung kamu, dan genggam tangan kamu di setiap langkah.
 
-Semoga semua mimpi-mimpi kamu yang belum terwujud, bisa segera jadi kenyataan tahun ini. Tetap jadi diri kamu yang luar biasa ya.
+Aku akan coba berkembang lagi kedepannya, terus melangkah dan bergerak, mengumpulkan hal-hal yang pernah kita janjikan. Aku berterima kasih untuk setiap effort yang sudah kamu berikan untuk membuatku lebih berkembang. Sulit rasanya mengungkapkannya dalam kata-kata betapa berharganya kamu dimataku, dear ❤️
+
+Semoga semua mimpi-mimpi kamu yang belum terwujud, bisa segera jadi kenyataan tahun ini. Tetap jadi dirimu yang luar biasa ya.
 
 I love you more than words can say. Happy Birthday, my favorite person! ❤️
 
 Yours,
-[Nama Kamu]
+dwik
             </div>
             <button class="btn-main" style="margin-top: 30px; width: 100%; justify-content: center;" onclick="delayedNext(9)">
                 Seal the Letter <i data-lucide="mail"></i>
@@ -561,10 +609,9 @@ Yours,
         </div>
     </section>
 
-    <!-- SECTION 9: FINAL -->
     <section class="slide-container" id="section-9">
         <div class="letter-photo-frame">
-            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=800&auto=format&fit=crop" alt="My Love">
+            <img src="foto/2023 06 20.jpg" alt="My Love">
         </div>
         <h2 style="margin-top: 30px; color: var(--deep-pink);">Happy Birthday!</h2>
         <p style="margin-top: 15px; font-size: 1.2rem; font-weight: 600;">Sending you tons of love & kisses!</p>
@@ -580,9 +627,6 @@ Yours,
         </div>
     </section>
 
-    <!-- MODALS -->
-    
-    <!-- Gallery Modal -->
     <div class="modal-base gallery-modal" id="galleryModal">
         <div class="gallery-modal-content">
             <div class="close-btn" onclick="closeGalleryModal()">X</div>
@@ -591,10 +635,9 @@ Yours,
         </div>
     </div>
 
-    <!-- Polaroid Modal (Popup) -->
     <div class="modal-base polaroid-modal" id="polaroidModal">
         <div class="polaroid-content">
-            <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?q=80&w=1000&auto=format&fit=crop" alt="">
+            <img src="foto/2025 03 20.jpg" alt="">
             <div class="polaroid-caption">May it come true! ✨</div>
             <button class="btn-main" style="margin-top: 20px;" onclick="closePolaroidAndNext()">Amiin & Continue <i data-lucide="arrow-right"></i></button>
         </div>
@@ -603,7 +646,6 @@ Yours,
         <div class="deco-emoji" style="top: 50%; right: 5%; animation-delay: 1s;">💖</div>
     </div>
 
-    <!-- Final Letter Prompt Modal -->
     <div class="modal-base" id="finalLetterModal">
         <div class="wishes-complete-content">
             <h2 style="color: var(--deep-pink); font-family: 'Fredoka One';">All Wishes Unlocked! 🔓</h2>
@@ -638,6 +680,18 @@ Yours,
             setTimeout(() => {
                 const next = document.getElementById('section-' + id);
                 next.classList.remove('exit');
+                
+                // === LOGIC BARU UTK GALERI (Section 6) ===
+                if (id === 6) {
+                    const items = next.querySelectorAll('.gallery-item');
+                    items.forEach((item, index) => {
+                        // Animasi dimulai setelah 0.4 detik (setelah judul muncul)
+                        // Setiap foto muncul 0.1 detik setelah foto sebelumnya (supaya cepat)
+                        item.style.animationDelay = (0.4 + (index * 0.1)) + 's';
+                    });
+                }
+                // ==========================================
+
                 void next.offsetWidth; 
                 next.classList.add('active');
                 
@@ -786,3 +840,5 @@ Yours,
     </script>
 </body>
 </html>
+
+
